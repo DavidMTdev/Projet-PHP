@@ -54,7 +54,7 @@ if (isset($_POST["login"]) && isset($_POST["password"])) {
 
     if ($user) {
         if (password_verify($password, $user["password"])) {
-            $_SESSION["login"] = $login;
+            $_SESSION["login"] = $user["id_user"];
             $_SESSION["connected"] = true;
             $_SESSION["connectedAt"] = new DateTime();
         } else {

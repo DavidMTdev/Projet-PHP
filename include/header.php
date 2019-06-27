@@ -12,6 +12,9 @@
     <?php if ($_SERVER["SCRIPT_NAME"] === "/projet-php/login.php") : ?>
         <link rel="stylesheet" href="css/login.css">
         <title>Connexion</title>
+    <?php elseif ($_SERVER["SCRIPT_NAME"] === "/projet-php/profil.php") : ?>
+        <link rel="stylesheet" href="css/profil.css">
+        <title>Votre Profil</title>
     <?php endif; ?>
 </head>
 
