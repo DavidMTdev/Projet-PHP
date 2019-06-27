@@ -1,0 +1,157 @@
+body{
+    margin: 0;
+    padding: 0;
+    font-family: sans-serif;
+    background: #606060;
+}
+
+.border{
+    width: 160px;
+    height: 5px;
+    background: #1ed760;
+    margin: 15px auto;
+}
+
+.signup-box{
+    width: 60%;
+    text-align: center;
+}
+
+.signup{
+    text-align: left;
+    margin: 20px;
+}
+
+.signup-container{
+    padding: 40px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+
+}
+
+
+.user-name, .user-password{
+    display: grid;
+    grid-template-columns: 50% 50%;
+    margin: 10px 0;
+}
+
+.user-adress{
+    display :grid;
+    grid-template-columns: 39% 39% 22%;
+    margin: 10px 0;
+}
+
+.user-infos{
+    display: grid;
+    grid-template-columns: 33% 33% 33%;
+    margin: 10px 0;
+}
+
+.user-contact{
+    display: grid;
+    grid-template-columns: 50% 50%;
+    margin: 10px 0;
+}
+
+.signup-box h1{
+    text-transform:uppercase;
+    color: white;
+}
+
+.signup-box .signup-info,.signup-password{
+    border: 0;
+    background: none;
+    display: block;
+    margin: 0 20px;
+    padding: 10px;
+    border: 2px solid #404040;
+    padding: 14px 10px;
+    width: auto;
+    outline: none;
+    color: white;
+    border-radius: 24px;
+    box-shadow: 0 4px 4px #404040;
+    transition: 0.25s;
+}
+
+.signup-info::placeholder{
+    color: rgb(210, 210, 210);
+}
+.signup-password::placeholder{
+    color: rgb(210, 210, 210);
+}
+
+.signup-box .signup-info:focus,.signup-password:focus{
+    width: auto;
+    border-color: #33cc66;
+}
+
+.signup-submit{
+    background: none;
+    display: block;
+    margin: 20px auto;
+    text-align: center;
+    border: 2px solid #33cc66;
+    padding: 14px 10px;
+    width: 200px;
+    outline: none;
+    color: white;
+    border-radius: 24px;
+    transition: 0.25s;
+    cursor: pointer;
+}
+
+.signup-submit:hover{
+    background : #33cc66;
+}
+
+.signup-box a{
+    text-decoration: none;
+    color: white;
+    font-size: 12px;
+}
+
+.signup-box a:hover{
+    color: #33cc66;
+}
+
+
+
+@media screen and (max-width:800px){
+    .signup-container{
+        padding: 40px 0;
+        width: 100%;
+        display: flex;
+        justify-content: center;
+    }
+    .signup-box{
+        width: 80%;
+        text-align: center;
+    }
+    .user-name, .user-password{
+        display: grid;
+        grid-template-columns: 100%;
+        margin: 10px 0;
+    }
+    
+    .user-adress{
+        display :grid;
+        grid-template-columns: 100%;
+        margin: 10px 0;
+    }
+    
+    .user-infos{
+        display: grid;
+        grid-template-columns: 100%;
+        margin: 10px 0;
+    }
+    
+    .user-contact{
+        display: grid;
+        grid-template-columns: 100%;
+        margin: 10px 0;
+    }
+
+}
