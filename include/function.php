@@ -2,6 +2,8 @@
 /*
 
 fct=1    => fct se connecter
+fct=2    => fct s'inscrire'
+fct=3    =>fct liste utilisateur
 
 */
 session_start();
@@ -42,6 +44,13 @@ function execute($sql, $args = array())
     return $pdo->lastInsertId();
 }
 
+function setConnection($login)
+{
+    $_SESSION["login"] = $login;
+    $_SESSION["connected"] = true;
+    $_SESSION["connectedAt"] = new DateTime();
+}
+
 // fct=1 vérification de la connexion 
 if (isset($_POST["login"]) && isset($_POST["password"])) {
 
@@ -53,10 +62,8 @@ if (isset($_POST["login"]) && isset($_POST["password"])) {
     ));
 
     if ($user) {
-        if (password_verify($password, $user["password"])) {
-            $_SESSION["login"] = $user["id_user"];
-            $_SESSION["connected"] = true;
-            $_SESSION["connectedAt"] = new DateTime();
+        if (password_verify($password, $user["password_u"])) {
+            setConnection($user["id_user"]);
         } else {
             $error = "Mot de passe incorrect";
         }
@@ -65,20 +72,16 @@ if (isset($_POST["login"]) && isset($_POST["password"])) {
     }
 }
 
-
-/*
-
-fct=2    => fct s'inscrire'
-
-*/
-class error_signup extends Exception{ }
+//fct=2 fonction pour s'inscrire
+class error_signup extends Exception
+{ }
 if (isset($_POST['submit_signup'])) {
-    echo 1;
+    // echo 1;
     $pdo = getPdo();
     $error_mail = mail_unique();
     $PostalCode = strlen($_POST['postal_code']);
     $Phone = strlen($_POST['phone']);
-    var_dump($_POST['password']);
+    // var_dump($_POST['password']);
     try {
         if ($_POST['name'] == "") {
             throw new error_signup("tu n'a pas rempli ton nom");
@@ -105,10 +108,10 @@ if (isset($_POST['submit_signup'])) {
             throw new error_signup("code postal non valide");
         }
         if ($Phone != 10) {
-            throw new error_signup("numero de telephone non valide non valide");
+            throw new error_signup("numero de telephone non valide");
         }
         $inscription = execute("INSERT INTO user ( name_u, first_name_u, password_u, age_u, adress_u, city_u, postal_code_u, mail_u, phone_u) 
-                   VALUES (:name_u , :first_name_u, :password_u, :age_u, :adress_u, :city_u, :postal_code_u, :mail_u, :phone_u)",array(
+                   VALUES (:name_u , :first_name_u, :password_u, :age_u, :adress_u, :city_u, :postal_code_u, :mail_u, :phone_u)", array(
             ':name_u' => $_POST['name'],
             ':first_name_u' => $_POST['first-name'],
             ':password_u' => password_hash($_POST['password'], PASSWORD_DEFAULT),
@@ -118,34 +121,34 @@ if (isset($_POST['submit_signup'])) {
             ':postal_code_u' => $_POST['postal_code'],
             ':mail_u' => $_POST['mail'],
             ':phone_u' => $_POST['phone'],
-                   ));
-            header("location: home.php");
-        
-    }  catch(error_signup $e) {
+        ));
+
+        setConnection($inscription);
+
+        header("location: home.php");
+    } catch (error_signup $e) {
         echo $e->getMessage();
-    } catch(Exception $e) {
+    } catch (Exception $e) {
         echo "Si tu tombe sur cette erreur tu es vraiment le plus grand des abrutis de l'histoire";
     }
-   
 }
 
-function mail_unique(){
+function mail_unique()
+{
     $pdo = getPdo();
     $mail_u = $pdo->prepare("SELECT mail_u FROM user");
     $mail_u->execute();
     $mail_u = $mail_u->fetchAll(PDO::FETCH_ASSOC);
     // $mail_u = selectOne("SELECT mail_u FROM user",null);
     foreach ($mail_u as $key => $value) {
-        if($_POST["mail"] === $value["mail_u"]){
+        if ($_POST["mail"] === $value["mail_u"]) {
             return 1;
         }
     }
 }
 
-
-
-
-if(isset($_POST["submit_listUsers"])){
+//fct=3 fonction pour lister les utilisateurs
+if (isset($_POST["submit_listUsers"])) {
     $pdo = getPdo();
     $listUsers = $pdo->prepare('SELECT name_u FROM user WHERE name_u LIKE "%' . $_POST["search"] . '%"');
     $listUsers->execute();
