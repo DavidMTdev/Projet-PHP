@@ -12,11 +12,14 @@
     <?php if ($_SERVER["SCRIPT_NAME"] === "/projet-php/login.php") : ?>
         <link rel="stylesheet" href="css/login.css">
         <title>Connexion</title>
+    <?php elseif ($_SERVER["SCRIPT_NAME"] === "/projet-php/signup.php") : ?>
+        <link rel="stylesheet" href="css/signup.css">
+        <title>inscription</title>
     <?php endif; ?>
-</head>
+    </head>
 
-<body>
-    <header>
-        <?php require_once("include/nav.php") ?>
-    </header>
-    <main>
+    <body>
+        <header>
+            <?php require_once("include/nav.php") ?>
+        </header>
+        <main>
