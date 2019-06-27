@@ -48,7 +48,7 @@ if (isset($_POST["login"]) && isset($_POST["password"])) {
     $login = $_POST["login"];
     $password = $_POST["password"];
 
-    $user = selectOne("SELECT * FROM user WHERE mail = :login", array(
+    $user = selectOne("SELECT * FROM user WHERE mail_u = :login", array(
         'login' => $login
     ));
 
@@ -140,4 +140,13 @@ function mail_unique(){
             return 1;
         }
     }
+}
+
+
+
+
+if(isset($_POST["submit_listUsers"])){
+    $pdo = getPdo();
+    $listUsers = $pdo->prepare('SELECT name_u FROM user WHERE name_u LIKE "%' . $_POST["search"] . '%"');
+    $listUsers->execute();
 }
