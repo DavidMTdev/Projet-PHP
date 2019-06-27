@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="css/signup.css">
+    <title>Document</title>
+</head>
+
+<body>
+    <main>
+        <div class="signup-container">
+            <form action="" method="POST" class="signup-box">
+                <h1>Signup</h1>
+                <div class="border"></div>
+                <div class="signup">
+                    <div class="user-name">
+                        <input class="signup-info" type="text" name="nom" placeholder="Nom">
+                        <input class="signup-info" type="text" name="prenom" placeholder="Prénom">
+                    </div>
+
+                    <div class="user-adress">
+                        <input class="signup-info" type="text" name="adresse" placeholder="Rue">
+                        <input class="signup-info" type="text" name="ville" placeholder="Ville">
+                        <input class="signup-info" type="text" name="code" placeholder="Code postal">
+                    </div>
+
+                    <!-- <div class="user-infos">
+    
+                    <SELECT class="signup-info special " name="age" size="1">
+                        <OPTION> Age
+                            <?php for ($i = 16; $i <= 100; $i++) : ?>
+                            <OPTION> <?= $i;
+                                endfor ?>
+                    </SELECT>
+            </div> -->
+
+                    <div class="user-contact">
+                        <input class="signup-info" type="text" name="email" placeholder="Mail" required>
+                        <input class="signup-info" type="text" name="tel" placeholder="N° de Téléphone">
+                    </div>
+
+                    <div class="user-password">
+                        <input class="signup-password" type="password" name="mdp" placeholder="Password" required>
+                        <input class="signup-password" type="password" name="verification" placeholder="Confirmer le password" required>
+                    </div>
+
+                    <input class="signup-submit" type="submit" value="Signup" name="submit">
+                </div>
+            </form>
+        </div>
+    </main>
+</body>
+
+</html>
