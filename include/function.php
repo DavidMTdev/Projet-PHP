@@ -73,12 +73,10 @@ fct=2    => fct s'inscrire'
 */
 class error_signup extends Exception{ }
 if (isset($_POST['submit_signup'])) {
-    echo 1;
     $pdo = getPdo();
     $error_mail = mail_unique();
     $PostalCode = strlen($_POST['postal_code']);
     $Phone = strlen($_POST['phone']);
-    var_dump($_POST['password']);
     try {
         if ($_POST['name'] == "") {
             throw new error_signup("tu n'a pas rempli ton nom");
@@ -131,10 +129,7 @@ if (isset($_POST['submit_signup'])) {
 
 function mail_unique(){
     $pdo = getPdo();
-    $mail_u = $pdo->prepare("SELECT mail_u FROM user");
-    $mail_u->execute();
-    $mail_u = $mail_u->fetchAll(PDO::FETCH_ASSOC);
-    // $mail_u = selectOne("SELECT mail_u FROM user",null);
+    $mail_u = select("SELECT mail_u FROM user");
     foreach ($mail_u as $key => $value) {
         if($_POST["mail"] === $value["mail_u"]){
             return 1;
@@ -147,6 +142,5 @@ function mail_unique(){
 
 if(isset($_POST["submit_listUsers"])){
     $pdo = getPdo();
-    $listUsers = $pdo->prepare('SELECT name_u FROM user WHERE name_u LIKE "%' . $_POST["search"] . '%"');
-    $listUsers->execute();
+    $listUsers = select('SELECT name_u FROM user WHERE name_u LIKE "%' . $_POST["search"] . '%"');
 }
