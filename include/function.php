@@ -145,5 +145,5 @@ function mail_unique()
 //fct=3 fonction pour lister les utilisateurs
 if (isset($_POST["submit_listUsers"])) {
     $pdo = getPdo();
-    $listUsers = select('SELECT name_u FROM user WHERE name_u LIKE "%' . $_POST["search"] . '%"');
+    $listUsers = select('SELECT name_u FROM user WHERE name_u LIKE "' . $_POST["search"] . '%"');
 }
