@@ -3,7 +3,8 @@
 
 fct=1    => fct se connecter
 fct=2    => fct s'inscrire'
-fct=3    =>fct liste utilisateur
+fct=3    => fct liste utilisateur
+fct=4    => fct pour creer un event
 
 */
 session_start();
@@ -128,8 +129,8 @@ if (isset($_POST['submit_signup'])) {
         mkdir("upload" . DIRECTORY_SEPARATOR . $UsersSignup["id_user"] . DIRECTORY_SEPARATOR . "profil");
         $folder = 'upload/' . $UsersSignup["id_user"] . DIRECTORY_SEPARATOR . "profil" . DIRECTORY_SEPARATOR . "0.png";
         $pictureFake = 'C:/wamp64/www/Projet-PHP/upload/0.png';
-        copy($pictureFake, $folder); 
-        
+        copy($pictureFake, $folder);
+
         // header("location: home.php");
     } catch (error_signup $e) {
         echo $e->getMessage();
@@ -161,4 +162,93 @@ if (isset($_GET["user"])) {
     ));
 
     $folder = "upload" . DIRECTORY_SEPARATOR . $_GET["user"] . DIRECTORY_SEPARATOR . "profil" . DIRECTORY_SEPARATOR . $user["picture_u"];
+}
+
+
+// fct=4    => fct pour creer un event
+if (isset($_POST["submit_create_event"])) {
+    if (isset($_POST["privé"])) {
+        $_POST["privé"] = 1;
+    } else {
+        $_POST["privé"] = 0;
+    }
+    $len_description_e = strlen($_POST['description_e']);
+    $date = date("Y-m-d");
+    
+    var_dump($_POST['date1']);
+    var_dump($_POST['date2']);
+    var_dump($_POST['date3']);
+    $date = strtotime($date);
+    $deadline = strtotime($_POST['deadline']);
+    var_dump($date);
+    $date1 = strtotime($_POST['date1']);
+    $date2 = strtotime($_POST['date2']);
+    $date3 = strtotime($_POST['date3']);
+    var_dump($date1);
+    var_dump($date2);
+    var_dump($date3);
+    class error_create_event extends Exception
+    { }
+    
+    try {
+        if ($_POST['title'] == "") {
+            throw new error_create_event("tu n'a pas rempli le titre de l'evenement");
+        }
+        if ($len_description_e > 250) {
+            throw new error_create_event("il y'a maximum 250 caractere dans une description");
+        }
+        if ($_POST['description_e'] == "") {
+            throw new error_create_event("tu n'a pas rempli la description de l'evenement");
+        }
+        if ($_POST['date1'] == "") {
+            throw new error_create_event("tu n'a pas rempli une des dates possible pour l'evenement");
+        }
+        if ($_POST['date2'] == "") {
+            throw new error_create_event("tu n'a pas rempli une des dates possible pour l'evenement");
+        }
+        if ($_POST['date3'] == "") {
+            throw new error_create_event("tu n'a pas rempli une des dates possible pour l'evenement");
+        }
+        if ($_POST['deadline'] == "") {
+            throw new error_create_event("tu n'a pas rempli la deadline pour l'evenement");
+        }
+        if ($deadline < $date) {
+            throw new error_create_event("la dealine que tu as rentrer est déjà passé");
+        }
+        if ($date1 < $date) {
+            throw new error_create_event("l'une des dates que tu as rentrer est déjà passé");
+        }
+        if ($date2 < $date) {
+            throw new error_create_event("l'une des dates que tu as rentrer est déjà passé");
+        }
+        if ($date3 < $date) {
+            throw new error_create_event("l'une des dates que tu as rentrer est déjà passé");
+        }
+        
+        
+
+
+        $createEvent = execute("INSERT INTO events ( title, description_e, deadline, public, id_user) 
+                   VALUES (:title , :description_e, :deadline, :public, :id_user)", array(
+            ':title' => $_POST['title'],
+            ':description_e' => $_POST['description_e'],
+            ':deadline' => $_POST['deadline'],
+            ':public' => $_POST["privé"],
+            ':id_user' => $_SESSION["login"]
+        ));
+
+        $id_event = selectOne("SELECT MAX(id_events) id_events FROM events");
+        for ($i=1; $i < 4; $i++) { 
+            $create_date_survey = execute("INSERT INTO date_survey ( date_events, id_events) 
+        VALUES (:date_events, :id_events)", array(
+            ':date_events' => $_POST['date' . $i],
+            ':id_events' => $id_event["id_events"]
+        ));
+        }
+        
+    } catch (error_create_event $e) {
+        echo $e->getMessage();
+    } catch (Exception $e) {
+        echo "notre équipe travail actuellement sur ce probléme";
+    }
 }
