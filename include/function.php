@@ -119,6 +119,7 @@ if (isset($_POST['submit_signup'])) {
             ':mail_u' => $_POST['mail'],
             ':phone_u' => $_POST['phone'],
                    ));
+            header("location: home.php");
         
     }  catch(error_signup $e) {
         echo $e->getMessage();
