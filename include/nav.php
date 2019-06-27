@@ -5,7 +5,7 @@
             <li><a href="">A remplir</a></li>
             <li><a href="">Événements</a></li>
             <?php if (isset($_SESSION["connected"]) && $_SESSION["connected"]) : ?>
-                <li><a href=<?= "profil.php?user=" . $_SESSION["login"] ?>>Profil</a></li>
+                <li><a href=<?= "/projet-php/profil.php?user=" . $_SESSION["login"] ?>>Profil</a></li>
             <?php endif; ?>
         </ul>
         <ul class="nav-login">
