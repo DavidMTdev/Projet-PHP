@@ -123,7 +123,14 @@ if (isset($_POST['submit_signup'])) {
 
         setConnection($inscription);
 
-        header("location: home.php");
+        $UsersSignup = selectOne('SELECT MAX(id_user) id_user FROM user');
+        mkdir("upload" . DIRECTORY_SEPARATOR . $UsersSignup["id_user"]);
+        mkdir("upload" . DIRECTORY_SEPARATOR . $UsersSignup["id_user"] . DIRECTORY_SEPARATOR . "profil");
+        $folder = 'upload/' . $UsersSignup["id_user"] . DIRECTORY_SEPARATOR . "profil" . DIRECTORY_SEPARATOR . "0.png";
+        $pictureFake = 'C:/wamp64/www/Projet-PHP/upload/0.png';
+        copy($pictureFake, $folder); 
+        
+        // header("location: home.php");
     } catch (error_signup $e) {
         echo $e->getMessage();
     } catch (Exception $e) {
