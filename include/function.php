@@ -147,3 +147,11 @@ if (isset($_POST["submit_listUsers"])) {
     $pdo = getPdo();
     $listUsers = select('SELECT name_u FROM user WHERE name_u LIKE "' . $_POST["search"] . '%"');
 }
+
+if (isset($_GET["user"])) {
+    $user = selectOne("SELECT * FROM user WHERE id_user = :id", array(
+        "id" => $_GET["user"]
+    ));
+
+    $folder = "upload" . DIRECTORY_SEPARATOR . $_GET["user"] . DIRECTORY_SEPARATOR . "profil" . DIRECTORY_SEPARATOR . $user["picture_u"];
+}

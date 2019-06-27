@@ -3,17 +3,19 @@
 <div class="profil">
     <div class="profil-presentation">
         <div class="profil-image">
-            <img class="js-button-img" src="" alt="">
+            <img class="js-button-img" src=<?= $folder ?> alt="">
         </div>
         <div class="profil-principal">
-            <h2>NOM Prénom</h2>
-            <h3>Age ans</h3>
+            <h2><?= $user["name_u"] . " " . $user["first_name_u"] ?></h2>
+            <h3><?= $user["age_u"] ?> ans</h3>
             <br>
             <h3>Description</h3>
-            <p>Description de l'utilisateur</p>
-            <div class="modify-principal-button-container">
-                <button class="presentation-modify js-button-principal">Modifier</button>
-            </div>
+            <p><?= $user["description_u"] ?></p>
+            <?php if (isset($_SESSION["connected"]) && $_SESSION["login"] == $_GET["user"]) : ?>
+                <div class="modify-principal-button-container">
+                    <a href="admin/profil/modify-main.php" class="presentation-modify js-button-principal">Modifier</a>
+                </div>
+            <?php endif; ?>
         </div>
     </div>
     <div class="profil-contact">
@@ -21,15 +23,15 @@
             <h2>Contact</h2>
             <div class="border"></div>
             <ul>
-                <li><img src="icons/icons8-sonnerie-phonelink-24.png" alt="">Téléphone</li>
-                <li><img src="icons/icons8-email-filled-24.png" alt="">Mail</li>
+                <li><img src="icons/icons8-sonnerie-phonelink-24.png" alt=""><?= $user["phone_u"] ?></li>
+                <li><img src="icons/icons8-email-filled-24.png" alt=""><?= $user["mail_u"] ?></li>
             </ul>
-
-            <div class="modify-information-button-container">
-                <button class="contact-modify js-button-contact">Modifier</button>
-            </div>
+            <?php if (isset($_SESSION["connected"]) && $_SESSION["login"] == $_GET["user"]) : ?>
+                <div class="modify-information-button-container">
+                    <a href="admin/profil/modify-contact.php" class="contact-modify js-button-contact">Modifier</a>
+                </div>
+            <?php endif; ?>
         </div>
-
     </div>
 </div>
 
@@ -38,14 +40,14 @@
         <h2>Adresse</h2>
         <div class="border"></div>
         <ul>
-            <li><img src="icons/icons8-adresse-24.png" alt="">Adresse</li>
-            <li><img src="icons/icons8-epingle-de-carte-24.png" alt="">Code postal & Ville </li>
+            <li><img src="icons/icons8-adresse-24.png" alt=""><?= $user["adress_u"] ?></li>
+            <li><img src="icons/icons8-epingle-de-carte-24.png" alt=""><?= $user["postal_code_u"] . " " . $user["city_u"] ?></li>
         </ul>
-
-        <div class="modify-information-button-container">
-            <button class="address-modify js-button-adress">Modifier</button>
-        </div>
-
+        <?php if (isset($_SESSION["connected"]) && $_SESSION["login"] == $_GET["user"]) : ?>
+            <div class="modify-information-button-container">
+                <a href="admin/profil/modify-address.php" class="address-modify js-button-adress">Modifier</a>
+            </div>
+        <?php endif; ?>
     </div>
 </div>
 
@@ -56,9 +58,11 @@
         <ul>
             <li><img src="icons/icons8-mot-de-passe-24.png" alt="">**********</li>
         </ul>
-        <div class="modify-information-button-container">
-            <button class="password-modify js-button-password">Modifier votre mot de passe</button>
-        </div>
+        <?php if (isset($_SESSION["connected"]) && $_SESSION["login"] == $_GET["user"]) : ?>
+            <div class="modify-information-button-container">
+                <a href="admin/profil/modify-password.php" class="password-modify js-button-password">Modifier votre mot de passe</a>
+            </div>
+        <?php endif; ?>
     </div>
 </div>
 
