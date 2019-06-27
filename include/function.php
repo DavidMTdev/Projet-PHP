@@ -1,4 +1,9 @@
 <?php
+/*
+
+fct=1    => fct se connecter
+
+*/
 session_start();
 
 function getPdo()
@@ -37,26 +42,25 @@ function execute($sql, $args = array())
     return $pdo->lastInsertId();
 }
 
+// fct=1 vérification de la connexion 
 if (isset($_POST["login"]) && isset($_POST["password"])) {
 
     $login = $_POST["login"];
     $password = $_POST["password"];
 
-    $user = selectOne("SELECT * FROM user WHERE mail_user = :login", array(
+    $user = selectOne("SELECT * FROM user WHERE mail = :login", array(
         'login' => $login
     ));
 
     if ($user) {
         if (password_verify($password, $user["password"])) {
-            $_SESSION["login"] = $_POST["login"];
+            $_SESSION["login"] = $login;
             $_SESSION["connected"] = true;
             $_SESSION["connectedAt"] = new DateTime();
-
-            echo "Connecté avec succès !";
         } else {
-            echo "Mot de passe incorrect";
+            $error = "Mot de passe incorrect";
         }
     } else {
-        echo "Aucun compte avec ce login";
+        $error = "Aucun compte avec ce login";
     }
 }
