@@ -269,6 +269,24 @@ function uploadFile($fileInfo, $folder, $fileName)
 
 // fct=6    => fct modifier le profil de l'utilisateur
 try {
+    //modif mdp
+    if (isset($_POST["password"]) && isset($_POST["password_verif"])) {
+        if ($_POST['password'] == "") {
+            throw new ExceptionError("tu n'a pas rempli ton mot de passe");
+        } elseif ($_POST['password'] != $_POST['password_verif']) {
+            throw new ExceptionError("les deux mot de passe ne sont pas pareil");
+        }
+
+        $update = execute("UPDATE user SET password_u = :password_u WHERE id_user = :id_user", array(
+            ':id_user' => $_SESSION["login"],
+            ':password_u' => password_hash($_POST['password'], PASSWORD_DEFAULT)
+        ));
+
+        if (!isset($update) && $_POST["address"] != "") {
+            throw new ExceptionError("un problème est survenue");
+        }
+    }
+
     //modif adresse
     if (isset($_POST["address"]) && $_POST["address"] != "") {
         $update = execute("UPDATE user SET adress_u = :adress_u WHERE id_user = :id_user", array(
@@ -280,6 +298,7 @@ try {
             throw new ExceptionError("un problème est survenue");
         }
     }
+
     //modif ville
     if (isset($_POST["city"]) && $_POST["city"] != "") {
         $update = execute("UPDATE user SET city_u = :city_u WHERE id_user = :id_user", array(
