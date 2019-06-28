@@ -269,6 +269,44 @@ function uploadFile($fileInfo, $folder, $fileName)
 
 // fct=6    => fct modifier le profil de l'utilisateur
 try {
+    //modif adresse
+    if (isset($_POST["address"]) && $_POST["address"] != "") {
+        $update = execute("UPDATE user SET adress_u = :adress_u WHERE id_user = :id_user", array(
+            ':id_user' => $_SESSION["login"],
+            ':adress_u' => $_POST["address"]
+        ));
+
+        if (!isset($update) && $_POST["address"] != "") {
+            throw new ExceptionError("un problème est survenue");
+        }
+    }
+    //modif ville
+    if (isset($_POST["city"]) && $_POST["city"] != "") {
+        $update = execute("UPDATE user SET city_u = :city_u WHERE id_user = :id_user", array(
+            ':id_user' => $_SESSION["login"],
+            ':city_u' => $_POST["city"]
+        ));
+
+        if (!isset($update) && $_POST["city"] != "") {
+            throw new ExceptionError("un problème est survenue");
+        }
+    }
+
+    //modif code postal
+    if (isset($_POST["postalcode"]) && $_POST["postalcode"] != "") {
+        if (strlen($_POST["postalcode"]) != 5) {
+            throw new ExceptionError("code postal non valide");
+        }
+        $update = execute("UPDATE user SET postal_code_u = :postal_code_u WHERE id_user = :id_user", array(
+            ':id_user' => $_SESSION["login"],
+            ':postal_code_u' => $_POST["postalcode"]
+        ));
+
+        if (!isset($update) && $_POST["postalcode"] != "") {
+            throw new ExceptionError("un problème est survenue");
+        }
+    }
+
     //modif telephone
     if (isset($_POST["phone"]) && $_POST["phone"] != "") {
         if (strlen($_POST["phone"]) != 10) {
