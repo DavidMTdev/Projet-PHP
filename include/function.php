@@ -166,10 +166,16 @@ if (isset($_GET["user"])) {
 
 
 // fct=4    => fct pour creer un event
-$id_event_user = select("SELECT id_events, validation_events, public, id_user FROM events WHERE id_user = :id_user", array(
-    ':id_user' => $_SESSION["login"]
-));
-$last_id_event_user = $id_event_user[count($id_event_user) - 1];
+if (isset($_SESSION["login"])) {
+    $id_event_user = select("SELECT id_events, validation_events, public, id_user FROM events WHERE id_user = :id_user", array(
+        ':id_user' => $_SESSION["login"]
+    ));
+}
+
+if (!empty($id_event_user)) {
+    $last_id_event_user = $id_event_user[count($id_event_user) - 1];
+}
+
 if (isset($_POST["submit_create_event"])) {
     if (isset($_POST["privé"])) {
         $_POST["privé"] = 1;
@@ -307,19 +313,23 @@ if (isset($_POST["submit_create_event_add_users"])) {
         }
     }
 }
+
+// validation inviter pour un evenement
 $id_event = selectOne("SELECT MAX(id_events) id_events FROM events");
-$user_in_event = select('SELECT id_events, user.id_user ,name_u FROM user 
+if (!empty($id_event)) {
+    $user_in_event = select('SELECT id_events, user.id_user ,name_u FROM user 
 JOIN rejoin ON rejoin.id_user = user.id_user
 WHERE id_events = "' . $id_event["id_events"] . '"');
-if (isset($_POST["submit_invite"])) {
-    if (count($user_in_event) <= 0) {
-        echo "tu es obliger d'invité au moins une personne";
-    } else {
-        $update = execute("UPDATE events SET validation_events = :validation_events WHERE id_events = :id_events", array(
-            ':id_events' => $id_event["id_events"],
-            ':validation_events' => 1
-        ));
-        header("location: home.php");
+    if (isset($_POST["submit_invite"])) {
+        if (count($user_in_event) <= 0) {
+            echo "tu es obliger d'invité au moins une personne";
+        } else {
+            $update = execute("UPDATE events SET validation_events = :validation_events WHERE id_events = :id_events", array(
+                ':id_events' => $id_event["id_events"],
+                ':validation_events' => 1
+            ));
+            header("location: home.php");
+        }
     }
 }
 
