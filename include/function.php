@@ -362,10 +362,12 @@ try {
             ':picture_u' => $_SESSION["login"] . ".png"
         ));
 
-        if (!isset($update) && $_POST["firstname"] != "") {
+        if (!isset($update) && $_FILES["image"]["name"] != "") {
             throw new ExceptionError("un problème est survenue");
         } else {
-            uploadFile($_FILES["image"], $folder, $_SESSION["login"]);
+            if ($_FILES["image"]["name"] != "") {
+                uploadFile($_FILES["image"], $folder, $_SESSION["login"]);
+            }
         }
     }
 
