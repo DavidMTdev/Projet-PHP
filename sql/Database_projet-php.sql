@@ -35,8 +35,9 @@ create table events (
     -- si public = 0 => event est public 
     -- si public = 1 => event est privé
     validation_events int DEFAULT 0 not null,
-    -- si validation_events = 0 => l'event n'est pas encore valider par rapport a la deadline 
-    -- si validation_events = 1 => event validé et afficher dans la liste
+    -- si validation_events = 0 => event pas valider
+    -- si validation_events = 1 => l'event a finis d'etre creer mais n'est pas encore valider par rapport a la deadline 
+    -- si validation_events = 2 => event valider 
     id_user int not null,
     primary key (id_events),
     FOREIGN KEY (id_user) REFERENCES user(id_user)
