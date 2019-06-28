@@ -5,6 +5,7 @@ fct=1    => fct se connecter
 fct=2    => fct s'inscrire'
 fct=3    => fct liste utilisateur
 fct=4    => fct pour creer un event
+fct=5    => fct modifier les info principal de l'utilisateur
 
 */
 session_start();
@@ -174,7 +175,7 @@ if (isset($_POST["submit_create_event"])) {
     }
     $len_description_e = strlen($_POST['description_e']);
     $date = date("Y-m-d");
-    
+
     var_dump($_POST['date1']);
     var_dump($_POST['date2']);
     var_dump($_POST['date3']);
@@ -189,7 +190,7 @@ if (isset($_POST["submit_create_event"])) {
     var_dump($date3);
     class error_create_event extends Exception
     { }
-    
+
     try {
         if ($_POST['title'] == "") {
             throw new error_create_event("tu n'a pas rempli le titre de l'evenement");
@@ -224,9 +225,6 @@ if (isset($_POST["submit_create_event"])) {
         if ($date3 < $date) {
             throw new error_create_event("l'une des dates que tu as rentrer est déjà passé");
         }
-        
-        
-
 
         $createEvent = execute("INSERT INTO events ( title, description_e, deadline, public, id_user) 
                    VALUES (:title , :description_e, :deadline, :public, :id_user)", array(
@@ -238,17 +236,72 @@ if (isset($_POST["submit_create_event"])) {
         ));
 
         $id_event = selectOne("SELECT MAX(id_events) id_events FROM events");
-        for ($i=1; $i < 4; $i++) { 
+        for ($i = 1; $i < 4; $i++) {
             $create_date_survey = execute("INSERT INTO date_survey ( date_events, id_events) 
         VALUES (:date_events, :id_events)", array(
-            ':date_events' => $_POST['date' . $i],
-            ':id_events' => $id_event["id_events"]
-        ));
+                ':date_events' => $_POST['date' . $i],
+                ':id_events' => $id_event["id_events"]
+            ));
         }
-        
     } catch (error_create_event $e) {
         echo $e->getMessage();
     } catch (Exception $e) {
         echo "notre équipe travail actuellement sur ce probléme";
     }
+}
+
+class ExceptionError extends Exception
+{ }
+
+// fct=5    => fct modifier les info principal de l'utilisateur
+try {
+    if (isset($_FILES["image"])) { }
+
+    if (isset($_POST["firstname"]) && $_POST["firstname"] != "") {
+        $update = execute("UPDATE user SET first_name_u = :first_name_u WHERE id_user = :id_user", array(
+            ':id_user' => $_SESSION["login"],
+            ':first_name_u' => $_POST["firstname"]
+        ));
+
+        if (!isset($update) && $_POST["firstname"] != "") {
+            throw new ExceptionError("un problème est survenue");
+        }
+    }
+
+    if (isset($_POST["lastname"]) && $_POST["lastname"] != "") {
+        $update = execute("UPDATE user SET name_u = :name_u WHERE id_user = :id_user", array(
+            ':id_user' => $_SESSION["login"],
+            ':name_u' => $_POST["lastname"]
+        ));
+
+        if (!isset($update) && $_POST["lastname"] != "") {
+            throw new ExceptionError("un problème est survenue");
+        }
+    }
+
+    if (isset($_POST["age"]) && $_POST["age"] != "Age") {
+        $update = execute("UPDATE user SET age_u = :age_u WHERE id_user = :id_user", array(
+            ':id_user' => $_SESSION["login"],
+            ':age_u' => $_POST["age"]
+        ));
+
+        if (!isset($update) && $_POST["age"] != "") {
+            throw new ExceptionError("un problème est survenue");
+        }
+    }
+
+    if (isset($_POST["description"]) && $_POST["description"] != "") {
+        $update = execute("UPDATE user SET description_u = :description_u WHERE id_user = :id_user", array(
+            ':id_user' => $_SESSION["login"],
+            ':description_u' => $_POST["description"]
+        ));
+
+        if (!isset($update) && $_POST["description"] != "") {
+            throw new ExceptionError("un problème est survenue");
+        }
+    }
+} catch (ExceptionError $e) {
+    echo $e->getMessage();
+} catch (Exception $e) {
+    echo "notre équipe travail actuellement sur ce probléme";
 }
