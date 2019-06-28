@@ -253,9 +253,35 @@ if (isset($_POST["submit_create_event"])) {
 class ExceptionError extends Exception
 { }
 
+function uploadFile($fileInfo, $folder, $fileName)
+{
+    $source = $fileInfo["tmp_name"];
+
+    $destination = $folder . DIRECTORY_SEPARATOR . $fileName . ".png";
+
+    if (move_uploaded_file($source, $destination) == true) {
+        echo "Ca a marché";
+    } else {
+        echo "Ca n'a pas marché";
+    }
+}
+
 // fct=5    => fct modifier les info principal de l'utilisateur
 try {
-    if (isset($_FILES["image"])) { }
+    if (isset($_FILES["image"])) {
+        $folder = "../../upload" . DIRECTORY_SEPARATOR . $_SESSION["login"] . DIRECTORY_SEPARATOR . "profil";
+
+        $update = execute("UPDATE user SET picture_u = :picture_u WHERE id_user = :id_user", array(
+            ':id_user' => $_SESSION["login"],
+            ':picture_u' => $_SESSION["login"] . ".png"
+        ));
+
+        if (!isset($update) && $_POST["firstname"] != "") {
+            throw new ExceptionError("un problème est survenue");
+        } else {
+            uploadFile($_FILES["image"], $folder, $_SESSION["login"]);
+        }
+    }
 
     if (isset($_POST["firstname"]) && $_POST["firstname"] != "") {
         $update = execute("UPDATE user SET first_name_u = :first_name_u WHERE id_user = :id_user", array(
