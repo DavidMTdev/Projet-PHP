@@ -5,7 +5,8 @@ fct=1    => fct se connecter
 fct=2    => fct s'inscrire'
 fct=3    => fct liste utilisateur
 fct=4    => fct pour creer un event
-fct=5    => fct modifier les info principal de l'utilisateur
+fct=5    => fct upload un fichier
+fct=6    => fct modifier le profil de l'utilisateur
 
 */
 session_start();
@@ -330,7 +331,7 @@ if (isset($_POST["submit_invite"])){
 
 class ExceptionError extends Exception
 { }
-
+// fct=5    => fct upload un fichier
 function uploadFile($fileInfo, $folder, $fileName)
 {
     $source = $fileInfo["tmp_name"];
@@ -344,8 +345,93 @@ function uploadFile($fileInfo, $folder, $fileName)
     }
 }
 
-// fct=5    => fct modifier les info principal de l'utilisateur
+// fct=6    => fct modifier le profil de l'utilisateur
 try {
+    //modif mdp
+    if (isset($_POST["password"]) && isset($_POST["password_verif"])) {
+        if ($_POST['password'] == "") {
+            throw new ExceptionError("tu n'a pas rempli ton mot de passe");
+        } elseif ($_POST['password'] != $_POST['password_verif']) {
+            throw new ExceptionError("les deux mot de passe ne sont pas pareil");
+        }
+
+        $update = execute("UPDATE user SET password_u = :password_u WHERE id_user = :id_user", array(
+            ':id_user' => $_SESSION["login"],
+            ':password_u' => password_hash($_POST['password'], PASSWORD_DEFAULT)
+        ));
+
+        if (!isset($update) && $_POST["address"] != "") {
+            throw new ExceptionError("un problème est survenue");
+        }
+    }
+
+    //modif adresse
+    if (isset($_POST["address"]) && $_POST["address"] != "") {
+        $update = execute("UPDATE user SET adress_u = :adress_u WHERE id_user = :id_user", array(
+            ':id_user' => $_SESSION["login"],
+            ':adress_u' => $_POST["address"]
+        ));
+
+        if (!isset($update) && $_POST["address"] != "") {
+            throw new ExceptionError("un problème est survenue");
+        }
+    }
+
+    //modif ville
+    if (isset($_POST["city"]) && $_POST["city"] != "") {
+        $update = execute("UPDATE user SET city_u = :city_u WHERE id_user = :id_user", array(
+            ':id_user' => $_SESSION["login"],
+            ':city_u' => $_POST["city"]
+        ));
+
+        if (!isset($update) && $_POST["city"] != "") {
+            throw new ExceptionError("un problème est survenue");
+        }
+    }
+
+    //modif code postal
+    if (isset($_POST["postalcode"]) && $_POST["postalcode"] != "") {
+        if (strlen($_POST["postalcode"]) != 5) {
+            throw new ExceptionError("code postal non valide");
+        }
+        $update = execute("UPDATE user SET postal_code_u = :postal_code_u WHERE id_user = :id_user", array(
+            ':id_user' => $_SESSION["login"],
+            ':postal_code_u' => $_POST["postalcode"]
+        ));
+
+        if (!isset($update) && $_POST["postalcode"] != "") {
+            throw new ExceptionError("un problème est survenue");
+        }
+    }
+
+    //modif telephone
+    if (isset($_POST["phone"]) && $_POST["phone"] != "") {
+        if (strlen($_POST["phone"]) != 10) {
+            throw new ExceptionError("numero de telephone non valide");
+        }
+        $update = execute("UPDATE user SET phone_u = :phone_u WHERE id_user = :id_user", array(
+            ':id_user' => $_SESSION["login"],
+            ':phone_u' => $_POST["phone"]
+        ));
+
+        if (!isset($update) && $_POST["phone"] != "") {
+            throw new ExceptionError("un problème est survenue");
+        }
+    }
+
+    //modif mail
+    if (isset($_POST["mail"]) && $_POST["mail"] != "") {
+        $update = execute("UPDATE user SET mail_u = :mail_u WHERE id_user = :id_user", array(
+            ':id_user' => $_SESSION["login"],
+            ':mail_u' => $_POST["mail"]
+        ));
+
+        if (!isset($update) && $_POST["mail"] != "") {
+            throw new ExceptionError("un problème est survenue");
+        }
+    }
+
+    //modif image
     if (isset($_FILES["image"])) {
         $folder = "../../upload" . DIRECTORY_SEPARATOR . $_SESSION["login"] . DIRECTORY_SEPARATOR . "profil";
 
@@ -354,13 +440,16 @@ try {
             ':picture_u' => $_SESSION["login"] . ".png"
         ));
 
-        if (!isset($update) && $_POST["firstname"] != "") {
+        if (!isset($update) && $_FILES["image"]["name"] != "") {
             throw new ExceptionError("un problème est survenue");
         } else {
-            uploadFile($_FILES["image"], $folder, $_SESSION["login"]);
+            if ($_FILES["image"]["name"] != "") {
+                uploadFile($_FILES["image"], $folder, $_SESSION["login"]);
+            }
         }
     }
 
+    //modif prenom
     if (isset($_POST["firstname"]) && $_POST["firstname"] != "") {
         $update = execute("UPDATE user SET first_name_u = :first_name_u WHERE id_user = :id_user", array(
             ':id_user' => $_SESSION["login"],
@@ -372,6 +461,7 @@ try {
         }
     }
 
+    //modif nom
     if (isset($_POST["lastname"]) && $_POST["lastname"] != "") {
         $update = execute("UPDATE user SET name_u = :name_u WHERE id_user = :id_user", array(
             ':id_user' => $_SESSION["login"],
@@ -383,6 +473,7 @@ try {
         }
     }
 
+    //modif age
     if (isset($_POST["age"]) && $_POST["age"] != "Age") {
         $update = execute("UPDATE user SET age_u = :age_u WHERE id_user = :id_user", array(
             ':id_user' => $_SESSION["login"],
@@ -394,6 +485,7 @@ try {
         }
     }
 
+    //modif description
     if (isset($_POST["description"]) && $_POST["description"] != "") {
         $update = execute("UPDATE user SET description_u = :description_u WHERE id_user = :id_user", array(
             ':id_user' => $_SESSION["login"],
