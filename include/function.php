@@ -136,7 +136,7 @@ if (isset($_POST['submit_signup'])) {
     } catch (error_signup $e) {
         echo $e->getMessage();
     } catch (Exception $e) {
-        echo "Si tu tombe sur cette erreur tu es vraiment le plus grand des abrutis de l'histoire";
+        echo "notre équipe travail actuellement sur ce probléme";
     }
 }
 
@@ -154,7 +154,7 @@ function mail_unique()
 //fct=3 fonction pour lister les utilisateurs
 if (isset($_POST["submit_listUsers"])) {
     $pdo = getPdo();
-    $listUsers = select('SELECT name_u FROM user WHERE name_u LIKE "' . $_POST["search"] . '%"');
+    $listUsers = select('SELECT id_user,name_u FROM user WHERE name_u LIKE "' . $_POST["search"] . '%"');
 }
 
 if (isset($_GET["user"])) {
@@ -167,6 +167,10 @@ if (isset($_GET["user"])) {
 
 
 // fct=4    => fct pour creer un event
+$id_event_user = select("SELECT id_events, validation_events, public, id_user FROM events WHERE id_user = :id_user", array(
+    ':id_user' => $_SESSION["login"]
+));
+$last_id_event_user = $id_event_user[count($id_event_user) - 1];
 if (isset($_POST["submit_create_event"])) {
     if (isset($_POST["privé"])) {
         $_POST["privé"] = 1;
@@ -176,18 +180,11 @@ if (isset($_POST["submit_create_event"])) {
     $len_description_e = strlen($_POST['description_e']);
     $date = date("Y-m-d");
 
-    var_dump($_POST['date1']);
-    var_dump($_POST['date2']);
-    var_dump($_POST['date3']);
     $date = strtotime($date);
     $deadline = strtotime($_POST['deadline']);
-    var_dump($date);
     $date1 = strtotime($_POST['date1']);
     $date2 = strtotime($_POST['date2']);
     $date3 = strtotime($_POST['date3']);
-    var_dump($date1);
-    var_dump($date2);
-    var_dump($date3);
     class error_create_event extends Exception
     { }
 
@@ -243,12 +240,93 @@ if (isset($_POST["submit_create_event"])) {
                 ':id_events' => $id_event["id_events"]
             ));
         }
+
     } catch (error_create_event $e) {
         echo $e->getMessage();
     } catch (Exception $e) {
         echo "notre équipe travail actuellement sur ce probléme";
     }
+    $id_event_user = select("SELECT id_events, validation_events, public FROM events WHERE id_user = :id_user", array(
+        ':id_user' => $_SESSION["login"]
+    ));
+    $last_id_event_user = $id_event_user[count($id_event_user) - 1];
+    if($last_id_event_user["public"] == 0){
+        header("location: home.php");
+    }else{
+        header("location: listUsers.php");
+    }
 }
+
+
+// invité des personnes a un evenement
+// peut pas s'inviter lui meme
+
+function invitation($allUsers,$id_event){
+    foreach ($allUsers as $key => $value) {
+        if (isset($_POST["" . $key+1 . ""])) {
+            $add_user_event = execute("INSERT INTO rejoin ( id_user, id_events) 
+    VALUES (:id_user , :id_events)", array(
+                ':id_user' => $key+1,
+                ':id_events' => $id_event["id_events"]
+            ));
+        }
+    }
+}
+if (isset($_POST["submit_create_event_add_users"])) {
+    $allUsers = select("SELECT id_user FROM user");
+    $id_event = selectOne("SELECT MAX(id_events) id_events FROM events");
+    $user_in_event = select('SELECT user.id_user FROM user 
+    JOIN rejoin ON rejoin.id_user = user.id_user
+    WHERE id_events = "' . $id_event["id_events"] . '"');
+    foreach ($allUsers as $key => $value) {
+        if (isset($_POST["" . $key+1 . ""])) {
+            $user_no_repeat = selectOne('SELECT user.id_user FROM user 
+                JOIN rejoin ON rejoin.id_user = user.id_user
+                WHERE id_events = "' . $id_event["id_events"] . '"
+                AND rejoin.id_user = "' . ($key+1) . '"');
+        }
+    }
+    if (empty($user_in_event)) {
+        invitation($allUsers,$id_event);
+    }
+    elseif (empty($user_no_repeat)) { 
+        invitation($allUsers,$id_event);
+    } else {
+        foreach ($allUsers as $key => $value) {
+            foreach ($user_no_repeat as $key2 => $value2) {
+                if (isset($_POST["" . ($key+1) . ""])) {
+                    if (($key+1) != $user_no_repeat["id_user"]) {
+                        $add_user_event = execute("INSERT INTO rejoin ( id_user, id_events) 
+                VALUES (:id_user , :id_events)", array(
+                            ':id_user' => $key,
+                            ':id_events' => $id_event["id_events"]
+                        ));
+                    } else {
+                        echo "tu as déjà invité cette personne";
+                    }
+                }
+            }
+        }
+    }
+    
+}
+$id_event = selectOne("SELECT MAX(id_events) id_events FROM events");
+$user_in_event = select('SELECT id_events, user.id_user ,name_u FROM user 
+JOIN rejoin ON rejoin.id_user = user.id_user
+WHERE id_events = "' . $id_event["id_events"] . '"');
+if (isset($_POST["submit_invite"])){
+    if (count($user_in_event) <= 0){
+        echo "tu es obliger d'invité au moins une personne";
+    }
+    else{
+        $update = execute("UPDATE events SET validation_events = :validation_events WHERE id_events = :id_events", array(
+            ':id_events' => $id_event["id_events"],
+            ':validation_events' => 1
+        ));
+        header("location: home.php");
+    }
+}
+
 
 class ExceptionError extends Exception
 { }

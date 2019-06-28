@@ -1,4 +1,8 @@
-<?php require_once("include/header.php") ?>
+<?php require_once("include/header.php");
+if (!isset($_SESSION["login"])){
+    header("location: login.php");
+}
+?>
 
 <form action="" method="post">
 <input type="text" name="title" placeholder="titre">
@@ -9,7 +13,7 @@
 <input type="date" name="deadline" placeholder="deadline">
 <input type="checkbox" name="privé">
 <label for="">privé</label>
-<button type="submit" name="submit_create_event">valider</button>
+<button type="submit" name="submit_create_event">continuer</button>
 </form>
 
 <?php require_once("include/footer.php") ?>
