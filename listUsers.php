@@ -2,6 +2,16 @@
 if (!isset($_SESSION["login"])) {
     header("location: login.php");
 };
+if (!empty($last_id_event_user)) {
+    $last_id_event_user = $id_event_user[count($id_event_user) - 1];
+    if ($last_id_event_user["public"] == 0) {
+        $update = execute("UPDATE events SET validation_events = :validation_events WHERE id_events = :id_events", array(
+            ':id_events' => $last_id_event_user["id_events"],
+            ':validation_events' => 1
+        ));
+        header("location: home.php");
+    }
+}
 ?>
 
 <form action="" method="post">
@@ -51,6 +61,9 @@ endif; ?>
     if ($last_id_event_user["validation_events"] == 0) : ?>
         <form action="" method="post">
             <button type="submit" name="submit_invite">Valider</button>
+        </form>
+        <form action="createEvent.php" method="post">
+            <button type="submit" name="submit_annuler_evenement">annuler</button>
         </form>
     <?php endif;
 endif; ?>
