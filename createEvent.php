@@ -9,17 +9,33 @@ if (!empty($last_id_event_user)) {
     }
 }
 ?>
+<div class="display-flex-center">
+    <div class="create-event-title-container">
+        <h1>Créer un événement</h1>
+        <div class="border"></div>
+    </div>
+</div>
 
-<form action="" method="post">
-    <input type="text" name="title" placeholder="titre">
-    <textarea name="description_e" placeholder="description" cols="30" rows="10"></textarea>
-    <input type="datetime-local" name="date1" placeholder="1er date">
-    <input type="datetime-local" name="date2" placeholder="2eme date">
-    <input type="datetime-local" name="date3" placeholder="3eme date">
-    <input type="date" name="deadline" placeholder="deadline">
-    <input type="checkbox" name="privé">
-    <label for="">privé</label>
-    <button type="submit" name="submit_create_event">continuer</button>
+<form action="" method="post" class="event-infos">
+    <div class="display-flex-center">
+        <div class="event-infos-container">
+            <input type="text" name="title" placeholder="Titre" class="event-info-input">
+            <textarea name="description_e" placeholder="Description" cols="30" rows="10" class="event-description-input"></textarea>
+            <h3>Date N°1</h3>
+            <input type="datetime-local" name="date1" placeholder="1er date" class="event-info-input">
+            <h3>Date N°2</h3>
+            <input type="datetime-local" name="date2" placeholder="2eme date" class="event-info-input">
+            <h3>Date N°3</h3>
+            <input type="datetime-local" name="date3" placeholder="3eme date" class="event-info-input">
+            <h3>Deadline</h3>
+            <input type="date" name="deadline" placeholder="deadline" class="event-info-input">
+            <div class="checkbox-container">
+                <input type="checkbox" name="privé">
+                <label for="">privé</label>
+            </div>
+            <button type="submit" name="submit_create_event" class="event-submit-button">Continuer</button>
+        </div>
+    </div>
 </form>
 
 <?php require_once("include/footer.php") ?>

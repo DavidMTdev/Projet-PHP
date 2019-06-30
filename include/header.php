@@ -33,7 +33,10 @@ if ($path === "/projet-php/admin/profil") {
         <title>Votre Profil</title>
     <?php elseif ($_SERVER["SCRIPT_NAME"] === "/projet-php/signup.php") : ?>
         <link rel="stylesheet" href="css/signup.css">
-        <title>inscription</title>
+        <title>Inscription</title>
+    <?php elseif ($_SERVER["SCRIPT_NAME"] === "/projet-php/createEvent.php") : ?>
+        <link rel="stylesheet" href="css/createEvent.css">
+        <title>Inscription</title>
     <?php endif; ?>
 </head>
 

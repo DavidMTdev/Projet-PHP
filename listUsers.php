@@ -16,7 +16,7 @@ if (!empty($last_id_event_user)) {
 
 <form action="" method="post">
     <input type="search" name="search" placeholder="Recherche...">
-    <button type="submit" name="submit_listUsers">rechercher</button>
+    <button type="submit" name="submit_listUsers">Rechercher</button>
 </form>
 
 <form action="" method="post">
@@ -40,7 +40,7 @@ if (!empty($last_id_event_user)) {
     endforeach;
     if (!empty($last_id_event_user)) :
         if ($last_id_event_user["validation_events"] == 0) : ?>
-                <button type="submit" name="submit_create_event_add_users">ajouter</button>
+                <button type="submit" name="submit_create_event_add_users">Ajouter</button>
             <?php endif;
     endif;
 endif; ?>
@@ -63,7 +63,7 @@ endif; ?>
             <button type="submit" name="submit_invite">Valider</button>
         </form>
         <form action="createEvent.php" method="post">
-            <button type="submit" name="submit_annuler_evenement">annuler</button>
+            <button type="submit" name="submit_annuler_evenement">Annuler</button>
         </form>
     <?php endif;
 endif; ?>
