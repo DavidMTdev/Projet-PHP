@@ -509,3 +509,20 @@ try {
 } catch (Exception $e) {
     echo "notre équipe travail actuellement sur ce probléme";
 }
+
+if (isset($_GET['user']) && !isset($_POST['search_event'])) {
+    $listEventPublic = select("SELECT * FROM events WHERE public = :public", array(
+        "public" => 0
+    ));
+} elseif (isset($_GET['user']) && isset($_POST['search_event'])) {
+    $listEventPublic = select("SELECT * FROM events WHERE public = :public AND title LIKE :search", array(
+        "public" => 0,
+        "search" => $_POST["search_event"] . "%"
+    ));
+}
+
+if (isset($_GET["event"])) {
+    $event = selectOne("SELECT * FROM events WHERE id_events = :id_events", array(
+        "id_events" => $_GET["event"]
+    ));
+}
