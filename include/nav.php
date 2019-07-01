@@ -10,7 +10,11 @@
         </ul>
         <ul class="nav-login">
             <?php if (isset($_SESSION["connected"]) && $_SESSION["connected"]) : ?>
-                <li><a href="disconnection.php">Deconnexion</a></li>
+                <?php if ($path === "/projet-php/admin/profil") : ?>
+                    <li><a href="../../disconnection.php">Deconnexion</a></li>
+                <?php else : ?>
+                    <li><a href="disconnection.php">Deconnexion</a></li>
+                <?php endif; ?>
             <?php else : ?>
                 <li><a href="login.php">Se connecter</a></li>
             <?php endif; ?>
