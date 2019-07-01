@@ -526,3 +526,11 @@ if (isset($_GET["event"])) {
         "id_events" => $_GET["event"]
     ));
 }
+
+if (isset($_GET['user'])) {
+    $listEventUser = select("SELECT e.id_events, title, description_e,date_events, deadline, public FROM rejoin r JOIN events e ON r.id_events = e.id_events WHERE r.id_user = :id_user1 UNION SELECT e.id_events, title, description_e,date_events, deadline, public FROM rejoin r JOIN events e ON r.id_events = e.id_events WHERE e.id_user = :id_user2 ORDER BY `deadline` ASC", array(
+        "id_user1" => $_GET['user'],
+        "id_user2" => $_GET['user']
+    ));
+    // var_dump($listEventUser);
+}
