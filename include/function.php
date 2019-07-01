@@ -133,7 +133,7 @@ if (isset($_POST['submit_signup'])) {
         $pictureFake = 'C:/wamp64/www/Projet-PHP/upload/0.png';
         copy($pictureFake, $folder);
 
-        // header("location: home.php");
+        header("location: home.php");
     } catch (error_signup $e) {
         echo $e->getMessage();
     } catch (Exception $e) {
@@ -167,7 +167,7 @@ if (isset($_GET["user"])) {
 
 // fct=4    => fct pour creer un event
 if (isset($_SESSION["login"])) {
-    $id_event_user = select("SELECT id_events, validation_events, public, id_user FROM events WHERE id_user = :id_user", array(
+    $id_event_user = select("SELECT id_events, validation_events, public, id_user FROM events WHERE id_user = :id_user ORDER BY id_events", array(
         ':id_user' => $_SESSION["login"]
     ));
 }
@@ -237,6 +237,8 @@ if (isset($_POST["submit_create_event"])) {
             ':id_user' => $_SESSION["login"]
         ));
 
+
+
         $id_event = selectOne("SELECT MAX(id_events) id_events FROM events");
         for ($i = 1; $i < 4; $i++) {
             $create_date_survey = execute("INSERT INTO date_survey ( date_events, id_events) 
@@ -253,18 +255,12 @@ if (isset($_POST["submit_create_event"])) {
     $id_event_user = select("SELECT id_events, validation_events, public FROM events WHERE id_user = :id_user", array(
         ':id_user' => $_SESSION["login"]
     ));
-    $last_id_event_user = $id_event_user[count($id_event_user) - 1];
-    if ($last_id_event_user["public"] == 0) {
-        header("location: home.php");
-    } else {
-        header("location: listUsers.php");
-    }
+
+    header("location: listUsers.php");
 }
 
 
 // invité des personnes a un evenement
-// peut pas s'inviter lui meme
-
 function invitation($allUsers, $id_event)
 {
     foreach ($allUsers as $key => $value) {
@@ -332,7 +328,14 @@ WHERE id_events = "' . $id_event["id_events"] . '"');
         }
     }
 }
-
+// annuler un evenement si evenement privé et que la personne est entrain de faire le choix des invités
+// si l'user n'a pas valider l'invation des autres user et si il veut aller sur la page createEvent redirection sur listUsers
+if (isset($_POST["submit_annuler_evenement"])) {
+    $last_id_event_user = $id_event_user[count($id_event_user) - 1];
+    $delete_event_not_valid = execute('DELETE FROM events 
+    WHERE id_events = "' . $last_id_event_user["id_events"] . '"
+    AND id_user = "' . $_SESSION["login"] . '"');
+}
 
 class ExceptionError extends Exception
 { }

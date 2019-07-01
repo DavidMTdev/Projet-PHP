@@ -2,11 +2,21 @@
 if (!isset($_SESSION["login"])) {
     header("location: login.php");
 };
+if (!empty($last_id_event_user)) {
+    $last_id_event_user = $id_event_user[count($id_event_user) - 1];
+    if ($last_id_event_user["public"] == 0) {
+        $update = execute("UPDATE events SET validation_events = :validation_events WHERE id_events = :id_events", array(
+            ':id_events' => $last_id_event_user["id_events"],
+            ':validation_events' => 1
+        ));
+        header("location: home.php");
+    }
+}
 ?>
 
 <form action="" method="post">
     <input type="search" name="search" placeholder="Recherche...">
-    <button type="submit" name="submit_listUsers">rechercher</button>
+    <button type="submit" name="submit_listUsers">Rechercher</button>
 </form>
 
 <form action="" method="post">
@@ -30,7 +40,7 @@ if (!isset($_SESSION["login"])) {
     endforeach;
     if (!empty($last_id_event_user)) :
         if ($last_id_event_user["validation_events"] == 0) : ?>
-                <button type="submit" name="submit_create_event_add_users">ajouter</button>
+                <button type="submit" name="submit_create_event_add_users">Ajouter</button>
             <?php endif;
     endif;
 endif; ?>
@@ -51,6 +61,9 @@ endif; ?>
     if ($last_id_event_user["validation_events"] == 0) : ?>
         <form action="" method="post">
             <button type="submit" name="submit_invite">Valider</button>
+        </form>
+        <form action="createEvent.php" method="post">
+            <button type="submit" name="submit_annuler_evenement">Annuler</button>
         </form>
     <?php endif;
 endif; ?>

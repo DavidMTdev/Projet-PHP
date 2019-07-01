@@ -8,6 +8,12 @@
             <div class="user-name">
                 <input class="signup-info" type="text" name="name" placeholder="Nom">
                 <input class="signup-info" type="text" name="first-name" placeholder="Prénom">
+                <SELECT class="signup-info special " name="age" size="1">
+                    <OPTION> Age
+                        <?php for ($i = 16; $i <= 100; $i++) : ?>
+                        <OPTION> <?= $i;
+                            endfor ?>
+                </SELECT>
             </div>
 
             <div class="user-adress">
@@ -16,15 +22,10 @@
                 <input class="signup-info" type="text" name="postal_code" placeholder="Code postal">
             </div>
 
-            <div class="user-infos">
+            <!-- <div class="user-infos">
 
-                <SELECT class="signup-info special " name="age" size="1">
-                    <OPTION> Age
-                        <?php for ($i = 16; $i <= 100; $i++) : ?>
-                        <OPTION> <?= $i;
-                            endfor ?>
-                </SELECT>
-            </div>
+                
+            </div> -->
 
             <div class="user-contact">
                 <input class="signup-info" type="text" name="mail" placeholder="Mail">
