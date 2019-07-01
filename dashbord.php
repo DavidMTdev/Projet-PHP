@@ -7,10 +7,16 @@
 
 <?php if (empty($listUsers)) : ?>
     <p>Aucun utilisateur trouver</p>
-<?php else :
-    foreach ($listUsers as $key => $value) : ?>
-        <li><img src=<?= "upload/" . $value["id_user"] . "/profil/" . $value["picture_u"] ?> alt=""><?= $value["name_u"] . " " . $value["first_name_u"] ?></li>
-    <?php endforeach;
-endif; ?>
+<?php else : ?>
+    <form action="" method="get">
+        <?php foreach ($listUsers as $key => $value) : ?>
+            <div>
+                <a href=<?= "profil?user=" . $value["id_user"] ?>>
+                    <img src=<?= "upload/" . $value["id_user"] . "/profil/" . $value["picture_u"] ?> alt=""><?= $value["name_u"] . " " . $value["first_name_u"] ?>
+                </a>
+            </div>
+        <?php endforeach; ?>
+    </form>
+<?php endif; ?>
 
 <?php require_once("include/footer.php") ?>
