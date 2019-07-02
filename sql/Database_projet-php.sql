@@ -50,6 +50,9 @@ create table rejoin (
     -- si statut = 0 => user n'a pas encore accepter ou refuser l'evenement
     -- si statut = 1 => user participe à l'evenement
     -- si statut = 2 => user ne participe pas à l'evenement
+    to_vote int DEFAULT 0 not null,
+    -- si to_vote = 0 alors l'user n'a pas encore voter et peut acceder aux sondage de l'evenement
+    -- si to_vote = 1 l'user a voter et ne peux pu acceder aux sondages
     primary key (id_user,id_events),
     FOREIGN KEY (id_user) REFERENCES user(id_user),
     FOREIGN KEY (id_events) REFERENCES events(id_events)
