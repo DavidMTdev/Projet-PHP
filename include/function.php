@@ -521,9 +521,17 @@ if (isset($_GET['user']) && !isset($_POST['search_event'])) {
     ));
 }
 
+
 if (isset($_GET["event"])) {
     $event = selectOne("SELECT * FROM events WHERE id_events = :id_events", array(
         "id_events" => $_GET["event"]
+    ));
+    $survey_date = select("SELECT * FROM date_survey WHERE id_events = :id_events", array(
+        "id_events" => $_GET["event"]
+    ));
+    $rejoin = selectOne("SELECT * FROM rejoin WHERE id_events = :id_events AND id_user = :id_user", array(
+        "id_events" => $_GET["event"],
+        "id_user" => $_SESSION["login"]
     ));
 }
 
@@ -533,4 +541,92 @@ if (isset($_GET['user'])) {
         "id_user2" => $_GET['user']
     ));
     // var_dump($listEventUser);
+}
+
+
+
+// sondage date
+if (isset($_POST["submit_survey_date"])) {
+    $count = 0;
+    $event_checkbox = 0;
+    $number_vote = 0;
+    foreach ($survey_date as $key => $value) {
+        if (isset($_POST['event' . $value["id_date_survey"]])) {
+            $count += 1;
+            $event_checkbox = $value["id_date_survey"];
+            $number_vote = $value["number_votes"];
+        }
+    }
+    switch ($count) {
+        case 0:
+            echo "tu n'a pas sélectionnez de date";
+            break;
+        case 1:
+            $update_vote = execute("UPDATE date_survey SET number_votes = :number_votes WHERE id_date_survey = :id_date_survey", array(
+                ':id_date_survey' => $event_checkbox,
+                ':number_votes' => $number_vote + 1
+            ));
+            $update_vote_user = execute("UPDATE rejoin SET to_vote = :to_vote WHERE id_events = :id_events AND id_user = :id_user", array(
+                "to_vote" => 1,
+                ':id_events' => $_GET["event"],
+                ':id_user' => $_SESSION["login"]
+            ));
+            break;
+        case 2:
+            echo "il ne faut sélectionnez qu'une seule date";
+            break;
+        case 3:
+            echo "il ne faut sélectionnez qu'une seule date";
+            break;
+    }
+}
+
+//s'inscrire a un evenement public
+if (isset($_POST["submit_signup_event_public"])) {
+    $add_user_event_signup = execute("INSERT INTO rejoin ( id_user, id_events, statut) 
+    VALUES (:id_user , :id_events, :statut)", array(
+        ':id_user' => $_SESSION["login"],
+        ':id_events' => $_GET["event"],
+        ":statut" => 1
+    ));
+    $rejoin = selectOne("SELECT * FROM rejoin WHERE id_events = :id_events AND id_user = :id_user", array(
+        "id_events" => $_GET["event"],
+        "id_user" => $_SESSION["login"]
+    ));
+}
+
+//se désinscrire a un evenement public
+if (isset($_POST["submit_unsignup_event"])) {
+    $delete_event_unsignup = execute('DELETE FROM rejoin 
+    WHERE id_events = "' . $_GET["event"] . '"
+    AND id_user = "' . $_SESSION["login"] . '"');
+    $rejoin = selectOne("SELECT * FROM rejoin WHERE id_events = :id_events AND id_user = :id_user", array(
+        "id_events" => $_GET["event"],
+        "id_user" => $_SESSION["login"]
+    ));
+}
+
+//date depasse la deadline ça conserve seulement la date qui a le plus de vote
+
+$every_event = select("SELECT * FROM events");
+if (!empty($every_event)) {
+    foreach ($every_event as $key => $value) {
+        if ($value["validation_events"] != 2) {
+            $date = date("Y-m-d");
+            $date = strtotime($date);
+            $deadline = strtotime($value["deadline"]);
+            if ($deadline <= $date) {
+                $every_date_survey = selectOne("SELECT date_events FROM date_survey WHERE id_events = :id_events ORDER BY number_votes desc", array(
+                    "id_events" => $value["id_events"]
+                ));
+                // var_dump($every_date_survey["date_events"]);
+                // var_dump($value["date_events"]);
+                // $update_date_events = execute("UPDATE events SET date_events = :date_events AND validation_events = :validation_events WHERE id_events = :id_events", array(
+                //     ":date_events" => $every_date_survey["date_events"],
+                //     ':validation_events' => 2,
+                //     ':id_events' => $value["id_events"]
+                // ));
+            }
+        }
+    }
 }
