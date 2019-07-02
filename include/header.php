@@ -1,14 +1,15 @@
 <?php
-$path = explode("/", $_SERVER["SCRIPT_NAME"]);
-if (count($path) > 3) {
-    $path = "/" . $path[1] . "/" . $path[2] . "/" . $path[3];
-}
+// $path = explode("/", $_SERVER["SCRIPT_NAME"]);
+// if (count($path) > 3) {
+//     $path = "/" . $path[1] . "/" . $path[2] . "/" . $path[3];
+// }
 
-if ($path === "/projet-php/admin/profil") {
-    require_once("../../include/function.php");
-} else {
-    require_once("include/function.php");
-}
+// if ($path === "/projet-php/admin/profil") {
+//     require_once("../../include/function.php");
+// } else {
+//     require_once("include/function.php");
+// }
+require_once("include/function.php");
 ?>
 
 <!DOCTYPE html>
@@ -18,11 +19,7 @@ if ($path === "/projet-php/admin/profil") {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <?php if ($path === "/projet-php/admin/profil") : ?>
-        <link rel="stylesheet" href="../../css/navbar.css">
-    <?php else : ?>
-        <link rel="stylesheet" href="css/navbar.css">
-    <?php endif; ?>
+   
 
 
     <?php if ($_SERVER["SCRIPT_NAME"] === "/projet-php/login.php") : ?>
@@ -43,11 +40,12 @@ if ($path === "/projet-php/admin/profil") {
 <body>
     <header>
         <?php
-        if ($path === "/projet-php/admin/profil") {
-            require_once("../../include/nav.php");
-        } else {
-            require_once("include/nav.php");
-        }
-        ?>
+        // if ($path === "/projet-php/admin/profil") {
+        //     require_once("../../include/nav.php");
+        // } else {
+        //     require_once("include/nav.php");
+        // }
+        // 
+        require_once("include/nav.php");?>
     </header>
     <main>

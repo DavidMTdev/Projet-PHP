@@ -227,6 +227,15 @@ if (isset($_POST["submit_create_event"])) {
         if ($date3 < $date) {
             throw new error_create_event("l'une des dates que tu as rentrer est déjà passé");
         }
+        if ($date1 < $deadline) {
+            throw new error_create_event("tu ne peux pas choisir une date pour ton evenement avant la deadline");
+        }
+        if ($date2 < $deadline) {
+            throw new error_create_event("tu ne peux pas choisir une date pour ton evenement avant la deadline");
+        }
+        if ($date3 < $deadline) {
+            throw new error_create_event("tu ne peux pas choisir une date pour ton evenement avant la deadline");
+        }
 
         $createEvent = execute("INSERT INTO events ( title, description_e, deadline, public, id_user) 
                    VALUES (:title , :description_e, :deadline, :public, :id_user)", array(
@@ -255,8 +264,11 @@ if (isset($_POST["submit_create_event"])) {
     $id_event_user = select("SELECT id_events, validation_events, public FROM events WHERE id_user = :id_user", array(
         ':id_user' => $_SESSION["login"]
     ));
-
-    header("location: listUsers.php");
+    if ($_POST["privé"] = 1) {
+        header("location: listUsers.php");
+    } else {
+        header("location: dashbord.php");
+    }
 }
 
 
@@ -335,6 +347,9 @@ if (isset($_POST["submit_annuler_evenement"])) {
     $delete_event_not_valid = execute('DELETE FROM events 
     WHERE id_events = "' . $last_id_event_user["id_events"] . '"
     AND id_user = "' . $_SESSION["login"] . '"');
+
+    $delete_rejoin_not_valid = execute('DELETE FROM rejoin 
+    WHERE id_events = "' . $last_id_event_user["id_events"] . '"');
 }
 
 class ExceptionError extends Exception
@@ -619,14 +634,22 @@ if (!empty($every_event)) {
                 $every_date_survey = selectOne("SELECT date_events FROM date_survey WHERE id_events = :id_events ORDER BY number_votes desc", array(
                     "id_events" => $value["id_events"]
                 ));
-                // var_dump($every_date_survey["date_events"]);
-                // var_dump($value["date_events"]);
-                // $update_date_events = execute("UPDATE events SET date_events = :date_events AND validation_events = :validation_events WHERE id_events = :id_events", array(
-                //     ":date_events" => $every_date_survey["date_events"],
-                //     ':validation_events' => 2,
-                //     ':id_events' => $value["id_events"]
-                // ));
+                $update_date_events = execute("UPDATE events SET date_events = :date_events, validation_events = :validation_events WHERE id_events = :id_events", array(
+                    ":date_events" => $every_date_survey["date_events"],
+                    ':validation_events' => 2,
+                    ':id_events' => $value["id_events"]
+                ));
             }
         }
     }
+}
+
+// annuler un evenement quand c'est le sien
+if (isset($_POST["submit_cancel_event"])) {
+    $delete_event_user = execute('DELETE FROM events 
+    WHERE id_events = "' . $_GET["event"] . '"');
+
+    $delete_event_user = execute('DELETE FROM rejoin 
+    WHERE id_events = "' . $_GET["event"] . '"');
+    header("location: dashbord.php");
 }
