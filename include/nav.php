@@ -1,22 +1,18 @@
 <div class="nav-header">
     <div class="nav">
         <ul class="nav-menu">
-            <li><a href="home.php">Accueil</a></li>
-            <li><a href=<?= "dashbord.php?user=" . $_SESSION['login'] ?>>Dashbord</a></li>
-            <li><a href="createEvent.php">Événements</a></li>
+            <li><a href="/projet-php/home.php">Accueil</a></li>
+            <li><a href="/projet-php/createEvent.php">Événements</a></li>
             <?php if (isset($_SESSION["connected"]) && $_SESSION["connected"]) : ?>
+                <li><a href=<?= "/projet-php/dashbord.php?user=" . $_SESSION['login'] ?>>Dashbord</a></li>
                 <li><a href=<?= "/projet-php/profil.php?user=" . $_SESSION["login"] ?>>Profil</a></li>
             <?php endif; ?>
         </ul>
         <ul class="nav-login">
             <?php if (isset($_SESSION["connected"]) && $_SESSION["connected"]) : ?>
-                <?php if ($path === "/projet-php/admin/profil") : ?>
-                    <li><a href="../../disconnection.php">Deconnexion</a></li>
-                <?php else : ?>
-                    <li><a href="disconnection.php">Deconnexion</a></li>
-                <?php endif; ?>
+                <li><a href="/projet-php/disconnection.php">Deconnexion</a></li>
             <?php else : ?>
-                <li><a href="login.php">Se connecter</a></li>
+                <li><a href="/projet-php/login.php">Se connecter</a></li>
             <?php endif; ?>
         </ul>
     </div>

@@ -52,6 +52,8 @@ function setConnection($login)
     $_SESSION["login"] = $login;
     $_SESSION["connected"] = true;
     $_SESSION["connectedAt"] = new DateTime();
+
+    header("location: dashbord.php?user=" . $_SESSION["login"]);
 }
 
 // fct=1 vérification de la connexion 
@@ -264,7 +266,7 @@ if (isset($_POST["submit_create_event"])) {
     $id_event_user = select("SELECT id_events, validation_events, public FROM events WHERE id_user = :id_user", array(
         ':id_user' => $_SESSION["login"]
     ));
-    if($_POST["privé"] == 0){
+    if ($_POST["privé"] == 0) {
         header("location: dashbord.php");
     }
 }
@@ -549,7 +551,7 @@ if (isset($_GET["event"])) {
 }
 
 if (isset($_GET['user'])) {
-    $listEventUser = select("SELECT e.id_events, title, description_e,date_events, deadline, public FROM rejoin r JOIN events e ON r.id_events = e.id_events WHERE r.id_user = :id_user1 UNION SELECT e.id_events, title, description_e,date_events, deadline, public FROM rejoin r JOIN events e ON r.id_events = e.id_events WHERE e.id_user = :id_user2 ORDER BY `deadline` ASC", array(
+    $listEventUser = select("SELECT e.id_events, title, description_e, date_events, deadline, public FROM rejoin r JOIN events e ON r.id_events = e.id_events WHERE r.id_user = :id_user1 UNION SELECT e.id_events, title, description_e, date_events, deadline, public FROM rejoin r JOIN events e ON r.id_events = e.id_events WHERE e.id_user = :id_user2 ORDER BY `deadline` ASC", array(
         "id_user1" => $_GET['user'],
         "id_user2" => $_GET['user']
     ));
@@ -650,4 +652,10 @@ if (isset($_POST["submit_cancel_event"])) {
     $delete_event_user = execute('DELETE FROM rejoin 
     WHERE id_events = "' . $_GET["event"] . '"');
     header("location: dashbord.php");
+}
+
+if (!isset($_SESSION["connected"])) {
+    if ($_SERVER["SCRIPT_NAME"] === "/projet-php/createEvent.php" || $_SERVER["SCRIPT_NAME"] === "/projet-php/profil.php" || $_SERVER["SCRIPT_NAME"] === "/projet-php/listUsers.php") {
+        header("location: login.php");
+    }
 }

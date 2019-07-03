@@ -1,7 +1,5 @@
 <?php require_once("include/header.php");
-if (!isset($_SESSION["login"])) {
-    header("location: login.php");
-};
+
 if (!empty($last_id_event_user)) {
     $last_id_event_user = $id_event_user[count($id_event_user) - 1];
     if ($last_id_event_user["public"] == 0) {
@@ -23,8 +21,8 @@ if (!empty($last_id_event_user)) {
     <?php if (empty($listUsers)) : ?>
         <p>Aucun utilisateur trouver</p>
     <?php else :
-    foreach ($listUsers as $key => $value) :
-        if ($_SESSION["login"] != $value["id_user"]) : ?>
+        foreach ($listUsers as $key => $value) :
+            if ($_SESSION["login"] != $value["id_user"]) : ?>
 
                 <li>
                     <img src="upload/<?= $value["id_user"] ?>/profil/<?= $value["picture_u"] ?>" alt="">
@@ -35,15 +33,15 @@ if (!empty($last_id_event_user)) {
                             <input type="checkbox" name="<?= $value["id_user"] ?>">
                         </li>
                     <?php endif;
+                endif;
             endif;
-        endif;
-    endforeach;
-    if (!empty($last_id_event_user)) :
-        if ($last_id_event_user["validation_events"] == 0) : ?>
+        endforeach;
+        if (!empty($last_id_event_user)) :
+            if ($last_id_event_user["validation_events"] == 0) : ?>
                 <button type="submit" name="submit_create_event_add_users">Ajouter</button>
             <?php endif;
-    endif;
-endif; ?>
+        endif;
+    endif; ?>
 </form>
 
 <?php if (!empty($last_id_event_user)) :
@@ -53,8 +51,8 @@ endif; ?>
             <?php foreach ($user_in_event as $key => $value) : ?>
                 <li><?= $value["name_u"] ?> <a href="removeInvite.php?id_user=<?= $value["id_user"] ?>&id_events=<?= $value["id_events"] ?>">X</a></li>
             <?php endforeach;
+        endif;
     endif;
-endif;
 endif; ?>
 
 <?php if (!empty($last_id_event_user)) :
@@ -67,9 +65,5 @@ endif; ?>
         </form>
     <?php endif;
 endif; ?>
-
-
-
-
 
 <?php require_once("include/footer.php") ?>
