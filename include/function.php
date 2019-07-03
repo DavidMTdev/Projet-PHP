@@ -264,9 +264,7 @@ if (isset($_POST["submit_create_event"])) {
     $id_event_user = select("SELECT id_events, validation_events, public FROM events WHERE id_user = :id_user", array(
         ':id_user' => $_SESSION["login"]
     ));
-    if ($_POST["privé"] = 1) {
-        header("location: listUsers.php");
-    } else {
+    if($_POST["privé"] == 0){
         header("location: dashbord.php");
     }
 }
