@@ -40,6 +40,9 @@ if ($path === "/projet-php/admin/profil") {
     <?php elseif ($_SERVER["SCRIPT_NAME"] === "/projet-php/listUsers.php") : ?>
         <link rel="stylesheet" href="css/listUsers.css">
         <title>Liste des utilisateurs</title>
+    <?php elseif ($_SERVER["SCRIPT_NAME"] === "/projet-php/dashbord.php") : ?>
+        <link rel="stylesheet" href="css/dashbord.css">
+        <title>Dashboard</title>
     <?php elseif ($_SERVER["SCRIPT_NAME"] === "/projet-php/modify-main.php" || "/projet-php/modify-address.php" || "/projet-php/modify-password.php" || "/projet-php/modify-contact.php") : ?>
         <link rel="stylesheet" href="css/modify-profil.css">
         <title>Modifier</title>

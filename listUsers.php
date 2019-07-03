@@ -32,11 +32,11 @@ if (!empty($last_id_event_user)) {
 <form action="" method="post">
     <?php if (empty($listUsers)) : ?>
         <p>Aucun utilisateurs trouvés</p>
-    <?php else :
-        foreach ($listUsers as $key => $value) :
-            if ($_SESSION["login"] != $value["id_user"]) : ?>
-<<<<<<< HEAD
-                <div class="userlist-container">
+    <?php else : ?>
+        <div class="userlist-container">
+            <?php foreach ($listUsers as $key => $value) :
+                if ($_SESSION["login"] != $value["id_user"]) : ?>
+
                     <li class="user-infos">
                         <img src="upload/<?= $value["id_user"] ?>/profil/<?= $value["picture_u"] ?>" alt="" class="user-img">
                         <?= $value["name_u"] ?>
@@ -45,23 +45,12 @@ if (!empty($last_id_event_user)) {
                             if ($last_id_event_user["validation_events"] == 0) : ?>
                                 <input type="checkbox" name="<?= $value["id_user"] ?>">
                             </li>
-                        </div>
-=======
-
-                <li>
-                    <img src="upload/<?= $value["id_user"] ?>/profil/<?= $value["picture_u"] ?>" alt="">
-                    <?= $value["name_u"] ?>
-                    <?= $value["first_name_u"] ?>
-                    <?php if (!empty($last_id_event_user)) :
-                        if ($last_id_event_user["validation_events"] == 0) : ?>
-                            <input type="checkbox" name="<?= $value["id_user"] ?>">
-                        </li>
->>>>>>> a65a7ff0fab9e4842ee06680b726b2d98d78fad3
-                    <?php endif;
+                        <?php endif;
+                    endif;
                 endif;
-            endif;
-        endforeach;
-        if (!empty($last_id_event_user)) :
+            endforeach; ?>
+        </div>
+        <?php if (!empty($last_id_event_user)) :
             if ($last_id_event_user["validation_events"] == 0) : ?>
                 <button type="submit" name="submit_create_event_add_users">Ajouter</button>
             <?php endif;
