@@ -1,7 +1,5 @@
 <?php require_once("include/header.php");
-if (!isset($_SESSION["login"])) {
-    header("location: login.php");
-};
+
 if (!empty($last_id_event_user)) {
     $last_id_event_user = $id_event_user[count($id_event_user) - 1];
     if ($last_id_event_user["public"] == 0) {
@@ -37,6 +35,7 @@ if (!empty($last_id_event_user)) {
     <?php else :
         foreach ($listUsers as $key => $value) :
             if ($_SESSION["login"] != $value["id_user"]) : ?>
+<<<<<<< HEAD
                 <div class="userlist-container">
                     <li class="user-infos">
                         <img src="upload/<?= $value["id_user"] ?>/profil/<?= $value["picture_u"] ?>" alt="" class="user-img">
@@ -47,6 +46,17 @@ if (!empty($last_id_event_user)) {
                                 <input type="checkbox" name="<?= $value["id_user"] ?>">
                             </li>
                         </div>
+=======
+
+                <li>
+                    <img src="upload/<?= $value["id_user"] ?>/profil/<?= $value["picture_u"] ?>" alt="">
+                    <?= $value["name_u"] ?>
+                    <?= $value["first_name_u"] ?>
+                    <?php if (!empty($last_id_event_user)) :
+                        if ($last_id_event_user["validation_events"] == 0) : ?>
+                            <input type="checkbox" name="<?= $value["id_user"] ?>">
+                        </li>
+>>>>>>> a65a7ff0fab9e4842ee06680b726b2d98d78fad3
                     <?php endif;
                 endif;
             endif;
@@ -80,9 +90,5 @@ endif; ?>
         </form>
     <?php endif;
 endif; ?>
-
-
-
-
 
 <?php require_once("include/footer.php") ?>

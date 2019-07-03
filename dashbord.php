@@ -1,5 +1,6 @@
 <?php require_once("include/header.php") ?>
 
+<!-- rechercher un utilisateur -->
 <div>
     <form action="" method="post">
         <input type="search" name="search" placeholder="Recherche...">
@@ -21,6 +22,7 @@
     <?php endif; ?>
 </div>
 
+<!-- rechercher un event -->
 <div>
     <h2>event public</h2>
     <form action="" method="post">
@@ -48,10 +50,11 @@
     <?php endif; ?>
 </div>
 
+<!-- liste des events de l'utilisateur -->
 <div>
     <h2>event du user</h2>
-    <form action="" method="post">
-        <?php if (empty($listEventPublic)) : ?>
+    <form action="/projet-php/list-event.php" method="get">
+        <?php if (empty($listEventUser)) : ?>
             <p>Aucun Event trouver</p>
         <?php else : ?>
             <?php $count = 0; ?>
@@ -75,8 +78,10 @@
                     $count++;
                 } ?>
             <?php endforeach; ?>
+            <input type="hidden" name="user" value=<?= $_GET['user'] ?>>
             <button type="submit">Tout voir</button>
         </form>
     <?php endif; ?>
 </div>
+
 <?php require_once("include/footer.php") ?>

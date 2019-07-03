@@ -1,7 +1,4 @@
 <?php require_once("include/header.php");
-if (!isset($_SESSION["login"])) {
-    header("location: login.php");
-}
 if (!empty($last_id_event_user)) {
     $last_id_event_user = $id_event_user[count($id_event_user) - 1];
     if ($last_id_event_user["validation_events"] == 0) {
