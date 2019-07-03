@@ -1,0 +1,93 @@
+body{
+    margin: 0;
+    padding: 0;
+    font-family: sans-serif;
+    background: #606060;
+}
+
+.border{
+    width: 160px;
+    height: 5px;
+    background: #0abde3;
+    margin: 15px auto;
+}
+
+.display-flex-center{
+    display: flex;
+    justify-content: center;
+}
+
+.modify-title-container{
+    color: white;
+    margin: 10px 0;
+}
+
+
+
+.modify-infos .modify-info-input{
+    background: none;
+    margin: 10px;
+    border: 2px solid #404040;
+    padding: 14px 10px;
+    width: 300px;
+    outline: none;
+    color: white;
+    border-radius: 24px;
+    box-shadow: 0 4px 4px #404040;
+    transition: 0.25s;
+}
+
+.modify-infos .modify-description-input{
+    background: none;
+    margin: 10px;
+    border: 2px solid #404040;
+    padding: 14px 10px;
+    max-width: 300px;
+    min-width: 300px;
+    max-height: 65px;
+    min-height: 65px;
+    outline: none;
+    color: white;
+    border-radius: 24px;
+    box-shadow: 0 4px 4px #404040;
+    transition: 0.25s;
+}
+.modify-info-input::placeholder{
+    color: white;
+}
+.modify-description-input::placeholder{
+    color: white;
+}
+.modify-info-input option{
+    color:black;
+}
+
+.modify-infos-container{
+    display: flex;
+    flex-direction: column;
+}
+
+.modify-infos-container h3{
+    text-align: center;
+    color: white;
+}
+
+.modify-submit-button{
+    background: none;
+    display: block;
+    margin: 20px auto;
+    text-align: center;
+    border: 2px solid #0abde3;
+    padding: 14px 10px;
+    width: 200px;
+    outline: none;
+    color: white;
+    border-radius: 24px;
+    transition: 0.25s;
+    cursor: pointer;
+    font-weight: bold; 
+}
+
+.modify-submit-button:hover{
+    background : #0abde3;
+}

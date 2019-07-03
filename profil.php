@@ -23,7 +23,7 @@
             <h2>Contact</h2>
             <div class="border"></div>
             <ul>
-                <li><img src="icons/icons8-sonnerie-phonelink-24.png" alt=""><?= $user["phone_u"] ?></li>
+                <li><img src="icons/icons8-phonelink-ring-filled-24.png" alt=""><?= $user["phone_u"] ?></li>
                 <li><img src="icons/icons8-email-filled-24.png" alt=""><?= $user["mail_u"] ?></li>
             </ul>
             <?php if (isset($_SESSION["connected"]) && $_SESSION["login"] == $_GET["user"]) : ?>
@@ -40,8 +40,8 @@
         <h2>Adresse</h2>
         <div class="border"></div>
         <ul>
-            <li><img src="icons/icons8-adresse-24.png" alt=""><?= $user["adress_u"] ?></li>
-            <li><img src="icons/icons8-epingle-de-carte-24.png" alt=""><?= $user["postal_code_u"] . " " . $user["city_u"] ?></li>
+            <li><img src="icons/icons8-address-24.png" alt=""><?= $user["adress_u"] ?></li>
+            <li><img src="icons/icons8-map-pin-24.png" alt=""><?= $user["postal_code_u"] . " " . $user["city_u"] ?></li>
         </ul>
         <?php if (isset($_SESSION["connected"]) && $_SESSION["login"] == $_GET["user"]) : ?>
             <div class="modify-information-button-container">
@@ -56,7 +56,7 @@
         <h2>Informations confidentialité</h2>
         <div class="border"></div>
         <ul>
-            <li><img src="icons/icons8-mot-de-passe-24.png" alt="">**********</li>
+            <li><img src="icons/icons8-password-reset-24.png" alt="">**********</li>
         </ul>
         <?php if (isset($_SESSION["connected"]) && $_SESSION["login"] == $_GET["user"]) : ?>
             <div class="modify-information-button-container">

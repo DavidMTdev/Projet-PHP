@@ -21,14 +21,14 @@ if (!empty($last_id_event_user)) {
         <div class="event-infos-container">
             <input type="text" name="title" placeholder="Titre" class="event-info-input">
             <textarea name="description_e" placeholder="Description" cols="30" rows="10" class="event-description-input"></textarea>
-            <h3>Date N°1</h3>
+            <h3>Deadline du choix de la date</h3>
+            <input type="date" name="deadline" placeholder="Deadline" class="event-info-input">
+            <h3>Proposition date N°1</h3>
             <input type="datetime-local" name="date1" placeholder="1er date" class="event-info-input">
-            <h3>Date N°2</h3>
+            <h3>Proposition date N°2</h3>
             <input type="datetime-local" name="date2" placeholder="2eme date" class="event-info-input">
-            <h3>Date N°3</h3>
+            <h3>Proposition date N°3</h3>
             <input type="datetime-local" name="date3" placeholder="3eme date" class="event-info-input">
-            <h3>Deadline</h3>
-            <input type="date" name="deadline" placeholder="deadline" class="event-info-input">
             <div class="checkbox-container">
                 <input type="checkbox" name="privé">
                 <label for="">privé</label>

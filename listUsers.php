@@ -14,36 +14,49 @@ if (!empty($last_id_event_user)) {
 }
 ?>
 
-<form action="" method="post">
-    <input type="search" name="search" placeholder="Recherche...">
-    <button type="submit" name="submit_listUsers">Rechercher</button>
+
+<div class="display-flex-center">
+    <div class="userlist-title-container">
+        <h1>Liste des utilisateurs</h1>
+        <div class="border"></div>
+    </div>
+</div>
+
+<form action="" method="post" class="userlist">
+    <div class="display-flex-center">
+        <div class="userlist-search-container">
+            <input type="search" name="search" placeholder="Recherche..." class="search-input">
+            <button type="submit" name="submit_listUsers" class="listuser-submit-button">Rechercher</button>
+        </div>
+    </div>
 </form>
 
 <form action="" method="post">
     <?php if (empty($listUsers)) : ?>
-        <p>Aucun utilisateur trouver</p>
+        <p>Aucun utilisateurs trouvés</p>
     <?php else :
-    foreach ($listUsers as $key => $value) :
-        if ($_SESSION["login"] != $value["id_user"]) : ?>
-
-                <li>
-                    <img src="upload/<?= $value["id_user"] ?>/profil/<?= $value["picture_u"] ?>" alt="">
-                    <?= $value["name_u"] ?>
-                    <?= $value["first_name_u"] ?>
-                    <?php if (!empty($last_id_event_user)) :
-                        if ($last_id_event_user["validation_events"] == 0) : ?>
-                            <input type="checkbox" name="<?= $value["id_user"] ?>">
-                        </li>
+        foreach ($listUsers as $key => $value) :
+            if ($_SESSION["login"] != $value["id_user"]) : ?>
+                <div class="userlist-container">
+                    <li class="user-infos">
+                        <img src="upload/<?= $value["id_user"] ?>/profil/<?= $value["picture_u"] ?>" alt="" class="user-img">
+                        <?= $value["name_u"] ?>
+                        <?= $value["first_name_u"] ?>
+                        <?php if (!empty($last_id_event_user)) :
+                            if ($last_id_event_user["validation_events"] == 0) : ?>
+                                <input type="checkbox" name="<?= $value["id_user"] ?>">
+                            </li>
+                        </div>
                     <?php endif;
+                endif;
             endif;
-        endif;
-    endforeach;
-    if (!empty($last_id_event_user)) :
-        if ($last_id_event_user["validation_events"] == 0) : ?>
+        endforeach;
+        if (!empty($last_id_event_user)) :
+            if ($last_id_event_user["validation_events"] == 0) : ?>
                 <button type="submit" name="submit_create_event_add_users">Ajouter</button>
             <?php endif;
-    endif;
-endif; ?>
+        endif;
+    endif; ?>
 </form>
 
 <?php if (!empty($last_id_event_user)) :
@@ -53,17 +66,17 @@ endif; ?>
             <?php foreach ($user_in_event as $key => $value) : ?>
                 <li><?= $value["name_u"] ?> <a href="removeInvite.php?id_user=<?= $value["id_user"] ?>&id_events=<?= $value["id_events"] ?>">X</a></li>
             <?php endforeach;
+        endif;
     endif;
-endif;
 endif; ?>
 
 <?php if (!empty($last_id_event_user)) :
     if ($last_id_event_user["validation_events"] == 0) : ?>
         <form action="" method="post">
-            <button type="submit" name="submit_invite">Valider</button>
+            <button type="submit" name="submit_invite" class="listuser-button submit">Valider</button>
         </form>
         <form action="createEvent.php" method="post">
-            <button type="submit" name="submit_annuler_evenement">Annuler</button>
+            <button type="submit" name="submit_annuler_evenement" class="listuser-button cancel">Annuler</button>
         </form>
     <?php endif;
 endif; ?>

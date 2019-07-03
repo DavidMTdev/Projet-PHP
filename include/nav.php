@@ -2,7 +2,7 @@
     <div class="nav">
         <ul class="nav-menu">
             <li><a href="home.php">Accueil</a></li>
-            <li><a href=<?= "dashbord.php?user=" . $_SESSION['login'] ?>>Dashbord</a></li>
+            <!-- <li><a href=<?= "dashbord.php?user=" . $_SESSION['login'] ?>>Dashbord</a></li> -->
             <li><a href="createEvent.php">Événements</a></li>
             <?php if (isset($_SESSION["connected"]) && $_SESSION["connected"]) : ?>
                 <li><a href=<?= "/projet-php/profil.php?user=" . $_SESSION["login"] ?>>Profil</a></li>

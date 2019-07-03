@@ -25,18 +25,24 @@ if ($path === "/projet-php/admin/profil") {
     <?php endif; ?>
 
 
-    <?php if ($_SERVER["SCRIPT_NAME"] === "/projet-php/login.php") : ?>
+    <?php if ($_SERVER["SCRIPT_NAME"] === "/projet-php/signup.php") : ?>
+        <link rel="stylesheet" href="css/signup.css">
+        <title>Inscription</title>
+    <?php elseif ($_SERVER["SCRIPT_NAME"] === "/projet-php/login.php") : ?>
         <link rel="stylesheet" href="css/login.css">
         <title>Connexion</title>
     <?php elseif ($_SERVER["SCRIPT_NAME"] === "/projet-php/profil.php") : ?>
         <link rel="stylesheet" href="css/profil.css">
         <title>Votre Profil</title>
-    <?php elseif ($_SERVER["SCRIPT_NAME"] === "/projet-php/signup.php") : ?>
-        <link rel="stylesheet" href="css/signup.css">
-        <title>Inscription</title>
     <?php elseif ($_SERVER["SCRIPT_NAME"] === "/projet-php/createEvent.php") : ?>
         <link rel="stylesheet" href="css/createEvent.css">
-        <title>Inscription</title>
+        <title>Créer un événement</title>
+    <?php elseif ($_SERVER["SCRIPT_NAME"] === "/projet-php/listUsers.php") : ?>
+        <link rel="stylesheet" href="css/listUsers.css">
+        <title>Liste des utilisateurs</title>
+    <?php elseif ($_SERVER["SCRIPT_NAME"] === "/projet-php/modify-main.php" || "/projet-php/modify-address.php" || "/projet-php/modify-password.php" || "/projet-php/modify-contact.php") : ?>
+        <link rel="stylesheet" href="css/modify-profil.css">
+        <title>Modifier</title>
     <?php endif; ?>
 </head>
 
