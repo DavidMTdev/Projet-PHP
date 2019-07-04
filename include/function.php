@@ -229,15 +229,6 @@ if (isset($_POST["submit_create_event"])) {
         if ($date3 < $date) {
             throw new error_create_event("l'une des dates que tu as rentrer est déjà passé");
         }
-        if ($date1 < $deadline) {
-            throw new error_create_event("tu ne peux pas choisir une date pour ton evenement avant la deadline");
-        }
-        if ($date2 < $deadline) {
-            throw new error_create_event("tu ne peux pas choisir une date pour ton evenement avant la deadline");
-        }
-        if ($date3 < $deadline) {
-            throw new error_create_event("tu ne peux pas choisir une date pour ton evenement avant la deadline");
-        }
 
         $createEvent = execute("INSERT INTO events ( title, description_e, deadline, public, id_user) 
                    VALUES (:title , :description_e, :deadline, :public, :id_user)", array(
@@ -268,6 +259,8 @@ if (isset($_POST["submit_create_event"])) {
     ));
     if ($_POST["privé"] == 0) {
         header("location: dashbord.php");
+    } else {
+        header("location: listUsers.php");
     }
 }
 
@@ -336,7 +329,7 @@ WHERE id_events = "' . $id_event["id_events"] . '"');
                 ':id_events' => $id_event["id_events"],
                 ':validation_events' => 1
             ));
-            header("location: home.php");
+            header("location: dashbord.php");
         }
     }
 }
