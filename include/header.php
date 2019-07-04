@@ -39,6 +39,7 @@ if ($path === "/projet-php/admin/profil") {
         <title>Créer un événement</title>
     <?php elseif ($_SERVER["SCRIPT_NAME"] === "/projet-php/listUsers.php") : ?>
         <link rel="stylesheet" href="css/listUsers.css">
+        <script src="https://kit.fontawesome.com/c3feb606cd.js"></script>
         <title>Liste des utilisateurs</title>
     <?php elseif ($_SERVER["SCRIPT_NAME"] === "/projet-php/dashbord.php") : ?>
         <link rel="stylesheet" href="css/dashbord.css">

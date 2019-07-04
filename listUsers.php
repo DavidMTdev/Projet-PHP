@@ -43,7 +43,7 @@ if (!empty($last_id_event_user)) {
                         <?= $value["first_name_u"] ?>
                         <?php if (!empty($last_id_event_user)) :
                             if ($last_id_event_user["validation_events"] == 0) : ?>
-                                <input type="checkbox" name="<?= $value["id_user"] ?>">
+                                <input type="checkbox" name="<?= $value["id_user"] ?>" class="add-user-checkbox">
                             </li>
                         <?php endif;
                     endif;
@@ -52,7 +52,9 @@ if (!empty($last_id_event_user)) {
         </div>
         <?php if (!empty($last_id_event_user)) :
             if ($last_id_event_user["validation_events"] == 0) : ?>
-                <button type="submit" name="submit_create_event_add_users">Ajouter</button>
+                <div class="submit-button-container">
+                    <button type="submit" name="submit_create_event_add_users" class="add-user-button">Ajouter</button>
+                </div>
             <?php endif;
         endif;
     endif; ?>
@@ -71,12 +73,17 @@ endif; ?>
 
 <?php if (!empty($last_id_event_user)) :
     if ($last_id_event_user["validation_events"] == 0) : ?>
-        <form action="" method="post">
-            <button type="submit" name="submit_invite" class="listuser-button submit">Valider</button>
-        </form>
-        <form action="createEvent.php" method="post">
-            <button type="submit" name="submit_annuler_evenement" class="listuser-button cancel">Annuler</button>
-        </form>
+        <div class="buttons-container">
+            <form action="" method="post">
+                <button type="submit" name="submit_invite" class="listuser-button submit"><i class="fas fa-check"></i></button>
+            </form>
+            <form action="createEvent.php" method="post">
+                <button type="submit" name="submit_annuler_evenement" class="listuser-button cancel"><i class="fas fa-times"></i>
+
+</button>
+            </form>
+        </div>
+
     <?php endif;
 endif; ?>
 
