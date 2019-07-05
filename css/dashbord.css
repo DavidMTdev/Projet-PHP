@@ -89,3 +89,30 @@ body{
     display: flex;
     align-items: center;
 }
+
+.event-container{
+    display: grid;
+    grid-template-columns: 33.3% 33.3% 33.3%;
+}
+
+.event{
+    margin-left: 20px;
+}
+
+.event a{
+    text-decoration: none;
+}
+
+.event-info{
+    text-decoration: none;
+    color: white;
+}
+
+.user-infos{
+    color: white;
+    text-decoration: none;
+}
+
+.user-infos a:hover{
+    color:black;
+}

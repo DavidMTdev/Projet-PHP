@@ -2,25 +2,43 @@
 
 <!-- liste des events de l'utilisateur -->
 <div>
-    <h2>event du user</h2>
+    <div class="display-flex-center">
+        <div class="event-title-container">
+            <h1>Vos événements</h1>
+            <div class="border"></div>
+        </div>
+    </div>
     <?php if (empty($listEventUser)) : ?>
-        <p>Aucun Event trouver</p>
+        <p>Aucun Event trouvé</p>
     <?php else : ?>
-        <?php foreach ($listEventUser as $key => $value) : ?>
-            <div>
-                <a href=<?= "event.php?event=" . $value["id_events"] ?>>
-                    <div><?= $value["title"] ?></div>
-                    <div><?= $value["deadline"] ?></div>
-                    <div>
-                        <?php if ($value["public"] == 0) : ?>
-                            publique
-                        <?php else : ?>
-                            privé
-                        <?php endif; ?>
-                    </div>
-                </a>
-            </div>
-        <?php endforeach; ?>
+        <div class="event-container">
+            <?php foreach ($listEventUser as $key => $value) : ?>
+                <div class="event">
+                    <a href=<?= "event.php?event=" . $value["id_events"] ?>>
+                        <div class="event-info title">
+                            <h3>Titre : </h3>
+                            <?= $value["title"] ?>
+                        </div>
+                        <div class="event-info deadline">
+                            <h3>Deadline :</h3>
+                            <?= $value["deadline"] ?>
+                        </div>
+                        <div class="event-info confidentiality">
+                            <h3>Confidentialité :</h3>
+                            <?php if ($value["public"] == 0) : ?>
+                                Public
+                            <?php else : ?>
+                                Privé
+                            <?php endif; ?>
+                        </div>
+
+                    </a>
+
+                </div>
+
+            <?php endforeach; ?>
+
+        </div>
     <?php endif; ?>
 </div>
 

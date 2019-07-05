@@ -53,20 +53,33 @@
             <p>Aucun Event trouvé</p>
         <?php else : ?>
             <?php $count = 0; ?>
-            <?php foreach ($listEventPublic as $key => $value) : ?>
-                <div>
-                    <a href=<?= "event.php?event=" . $value["id_events"] ?>>
-                        <div><?= $value["title"] ?></div>
-                        <div><?= $value["deadline"] ?></div>
-                        <div><?= $value["description_e"] ?></div>
-                    </a>
-                </div>
-                <?php if ($count == 4) {
-                    break;
-                } else {
-                    $count++;
-                } ?>
-            <?php endforeach; ?>
+            <div class="event-container">
+                <?php foreach ($listEventPublic as $key => $value) : ?>
+                    <div class="event">
+                        <a href=<?= "event.php?event=" . $value["id_events"] ?>>
+                            <div class="event-info title">
+                                <h3>Titre : </h3>
+                                <?= $value["title"] ?>
+                            </div>
+                            <div class="event-info deadline">
+                                <h3>Deadline :</h3>
+                                <?= $value["deadline"] ?>
+                            </div>
+                            <div class="event-info desc">
+                                <h3>Description :</h3>
+                                <?= $value["description_e"] ?>
+                            </div>
+                        </a>
+                    </div>
+                    <?php if ($count == 4) {
+                        break;
+                    } else {
+                        $count++;
+                    } ?>
+                <?php endforeach; ?>
+
+
+            </div>
         </form>
     <?php endif; ?>
 </div>
@@ -84,26 +97,35 @@
             <p>Aucun Event trouvé</p>
         <?php else : ?>
             <?php $count = 0; ?>
-            <?php foreach ($listEventUser as $key => $value) : ?>
-                <div>
-                    <a href=<?= "event.php?event=" . $value["id_events"] ?>>
-                        <div><?= $value["title"] ?></div>
-                        <div><?= $value["deadline"] ?></div>
-                        <div>
-                            <?php if ($value["public"] == 0) : ?>
-                                publique
-                            <?php else : ?>
-                                privé
-                            <?php endif; ?>
-                        </div>
-                    </a>
-                </div>
-                <?php if ($count == 4) {
-                    break;
-                } else {
-                    $count++;
-                } ?>
-            <?php endforeach; ?>
+            <div class="event-container">
+                <?php foreach ($listEventUser as $key => $value) : ?>
+                    <div class="event">
+                        <a href=<?= "event.php?event=" . $value["id_events"] ?>>
+                            <div class="event-info title">
+                                <h3>Titre :</h3>
+                                <?= $value["title"] ?>
+                            </div>
+                            <div class="event-info deadline">
+                                <h3>Deadline :</h3>
+                                <?= $value["deadline"] ?>
+                            </div>
+                            <div class="event-info confidentiality">
+                            <h3>Confidentialité :</h3>
+                                <?php if ($value["public"] == 0) : ?>
+                                    Public
+                                <?php else : ?>
+                                    Privé
+                                <?php endif; ?>
+                            </div>
+                        </a>
+                    </div>
+                    <?php if ($count == 4) {
+                        break;
+                    } else {
+                        $count++;
+                    } ?>
+                <?php endforeach; ?>
+            </div>
             <input type="hidden" name="user" value=<?= $_GET['user'] ?>>
             <button type="submit">Tout voir</button>
         </form>

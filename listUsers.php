@@ -63,11 +63,18 @@ if (!empty($last_id_event_user)) {
 <?php if (!empty($last_id_event_user)) :
     if ($last_id_event_user["validation_events"] == 0) :
         if (!empty($user_in_event)) : ?>
-            <h3>Liste des invités</h3>
-            <?php foreach ($user_in_event as $key => $value) : ?>
-                <li><?= $value["name_u"] ?> <a href="removeInvite.php?id_user=<?= $value["id_user"] ?>&id_events=<?= $value["id_events"] ?>">X</a></li>
-            <?php endforeach;
-        endif;
+            <div class="display-flex-center">
+                <div class="userlist-title-container">
+                    <h1>Liste des invités</h1>
+                    <div class="border"></div>
+                </div>
+            </div>
+            <div class="guest-users">
+                <?php foreach ($user_in_event as $key => $value) : ?>
+                    <li><?= $value["name_u"] ?> <a class="remove-invite" href="removeInvite.php?id_user=<?= $value["id_user"] ?>&id_events=<?= $value["id_events"] ?>"><i class="fas fa-times"></i></a></li>
+                <?php endforeach; ?>
+            </div>
+        <?php endif;
     endif;
 endif; ?>
 
@@ -80,7 +87,7 @@ endif; ?>
             <form action="createEvent.php" method="post">
                 <button type="submit" name="submit_annuler_evenement" class="listuser-button cancel"><i class="fas fa-times"></i>
 
-</button>
+                </button>
             </form>
         </div>
 
