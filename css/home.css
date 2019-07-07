@@ -1,8 +1,11 @@
 body {
-	background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(img/background.jpg);
-	height: 90vh;
-	background-size: cover;
-	background-position: center;
+	background-image: url("https://www.reparacionesdango.com/wp-content/uploads/2018/02/home_sec.jpg"); /* The image used */
+  background-color: #cccccc;
+  height: 100vh;
+  width: 100vw;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
 }
 
 .title {

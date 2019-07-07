@@ -5,6 +5,10 @@ body{
     text-decoration: none;
 }
 
+main{
+    margin: 0px;
+}
+
 .border{
     width: 160px;
     height: 5px;
