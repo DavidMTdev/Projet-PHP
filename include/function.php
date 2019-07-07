@@ -262,6 +262,8 @@ if (isset($_POST["submit_create_event"])) {
                 ':id_events' => $id_event["id_events"]
             ));
         }
+
+        header("location: dashbord.php?user=" . $_SESSION['login']);
     } catch (error_create_event $e) {
         echo $e->getMessage();
     } catch (Exception $e) {
@@ -330,13 +332,14 @@ function not_validate_event_privé()
             ':id_user' => $_SESSION["login"]
         ));
     }
-    
+
     if (!empty($id_event_user)) {
         $last_id_event_user = $id_event_user[count($id_event_user) - 1];
+        if ($last_id_event_user["validation_events"] == 0) {
+            header("location: listUsers.php");
+        }
     }
-    if ($last_id_event_user["validation_events"] == 0) {
-        header("location: listUsers.php");
-    }
+    
 }
 
 // validation inviter pour un evenement
@@ -353,7 +356,7 @@ WHERE id_events = "' . $id_event["id_events"] . '"');
                 ':id_events' => $id_event["id_events"],
                 ':validation_events' => 1
             ));
-            header("location: dashbord.php");
+            header("location: dashbord.php?user=" . $_SESSION['login']);
         }
     }
 }
@@ -612,7 +615,6 @@ if (isset($_POST["submit_survey_date"])) {
             echo "il ne faut sélectionnez qu'une seule date";
             break;
     }
-    
 }
 
 //s'inscrire a un evenement public
@@ -650,7 +652,7 @@ if (isset($_POST["submit_unsignup_event"])) {
     WHERE id_events = "' . $_GET["event"] . '"
     AND id_user = "' . $_SESSION["login"] . '"');
 
-    header("location: dashbord.php");
+    header("location: dashbord.php?user=" . $_SESSION['login']);
 }
 
 //date depasse la deadline ça conserve seulement la date qui a le plus de vote
@@ -683,7 +685,8 @@ if (isset($_POST["submit_cancel_event"])) {
 
     $delete_event_user = execute('DELETE FROM rejoin 
     WHERE id_events = "' . $_GET["event"] . '"');
-    header("location: dashbord.php");
+
+    header("location: dashbord.php?user=" . $_SESSION['login']);
 }
 
 if (!isset($_SESSION["connected"])) {
