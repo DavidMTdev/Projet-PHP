@@ -1,10 +1,17 @@
 body{
+<<<<<<< HEAD
     background-image: url(""); /* The image used */
   background-color: #cccccc; /* Used if the image is unavailable */
   height: 500px; /* You must set a specified height */
   background-position: center; /* Center the image */
   background-repeat: no-repeat; /* Do not repeat the image */
   background-size: cover;
+=======
+    background-image:linear-gradient(rgba(0,0,0,0.5),rgba(0,0,0,0.5)), url(Projet-PHP/img/background.jpg);
+    height: 90vh;
+    background-size: cover;
+    background-position: center;
+>>>>>>> ae054f32681d53536cd13a22f98a192359a0dd2d
 }
 
 .title{
