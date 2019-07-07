@@ -66,3 +66,49 @@ body{
 .listuser-button.cancel:hover{
     background : #e30a0a;
 }
+
+.unsubscribe-button{
+    background: none;
+    display: block;
+    margin: 20px;
+    text-align: center;
+    border: 2px solid #e30a0a;
+    padding: 14px 10px;
+    width: 180px;
+    outline: none;
+    color: white;
+    border-radius:24px;
+    transition: 0.25s;
+    cursor: pointer;
+    font-weight: bold;
+    box-shadow: 0 4px 4px #404040;
+}
+
+.subscribe-button{
+    background: none;
+    display: block;
+    margin: 20px;
+    text-align: center;
+    border: 2px solid #0abde3;
+    padding: 14px 10px;
+    width: 180px;
+    outline: none;
+    color: white;
+    border-radius: 24px;
+    transition: 0.25s;
+    cursor: pointer;
+    font-weight: bold;
+    box-shadow: 0 4px 4px #404040;
+}
+
+.subscribe-button:hover{
+    background: #0abde3;
+}
+
+.unsubscribe-button:hover{
+    background: #e30a0a;
+}
+
+.event-info{
+    padding: 10px 0;
+}
