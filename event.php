@@ -1,5 +1,6 @@
 <?php require_once("include/header.php");
-not_validate_event_privé(); ?>
+not_validate_event_privé(); 
+var_dump($error_event) ?>
 
 <div class="display-flex-center">
     <div class="event-title-container">
@@ -84,4 +85,5 @@ endif; ?>
         </form>
     <?php endif; ?>
 </div>
+
 <?php require_once("include/footer.php") ?>

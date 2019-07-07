@@ -335,10 +335,11 @@ function not_validate_event_privé()
 
     if (!empty($id_event_user)) {
         $last_id_event_user = $id_event_user[count($id_event_user) - 1];
+        if ($last_id_event_user["validation_events"] == 0) {
+            header("location: listUsers.php");
+        }
     }
-    if ($last_id_event_user["validation_events"] == 0) {
-        header("location: listUsers.php");
-    }
+    
 }
 
 // validation inviter pour un evenement
