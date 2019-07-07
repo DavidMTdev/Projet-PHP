@@ -60,24 +60,23 @@ endif; ?>
     <!-- // var_dump($rejoin["statut"]); -->
     <div class="display-flex-center">
         <?php if ($rejoin["statut"] == 0) : ?>
-
             <form action="" method="post">
-                <button type="submit" name="submit_signup_event_privé" >S'inscrire</button>
+                <button type="submit" name="submit_signup_event_privé">S'inscrire</button>
             </form>
         <?php else : ?>
             <form action="" method="post">
-                <button type="submit" name="submit_unsignup_event" >Se désinscrire</button>
+                <button type="submit" name="submit_unsignup_event">Se désinscrire</button>
             </form>
         <?php endif;
     else : ?>
         <form action="" method="post">
-            <button type="submit" name="submit_signup_event_public" >S'inscrire</button>
+            <button type="submit" name="submit_signup_event_public">S'inscrire</button>
         </form>
     <?php endif; ?>
 
     <?php if ($event["id_user"] == $_SESSION["login"]) : ?>
         <form action="" method="post">
-            <button type="submit" name="submit_cancel_event" >Annuler l'événement</button>
+            <button type="submit" name="submit_cancel_event">Annuler l'événement</button>
         </form>
     <?php endif; ?>
 </div>
