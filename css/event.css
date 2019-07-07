@@ -67,7 +67,7 @@ body{
     background : #e30a0a;
 }
 
-.unsubscribe-button{
+.unregister-button{
     background: none;
     display: block;
     margin: 20px;
@@ -84,7 +84,7 @@ body{
     box-shadow: 0 4px 4px #404040;
 }
 
-.subscribe-button{
+.register-button{
     background: none;
     display: block;
     margin: 20px;
@@ -101,11 +101,11 @@ body{
     box-shadow: 0 4px 4px #404040;
 }
 
-.subscribe-button:hover{
+.register-button:hover{
     background: #0abde3;
 }
 
-.unsubscribe-button:hover{
+.unregister-button:hover{
     background: #e30a0a;
 }
 
