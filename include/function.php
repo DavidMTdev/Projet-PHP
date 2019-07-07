@@ -603,6 +603,7 @@ if (isset($_POST["submit_survey_date"])) {
                 ':id_events' => $_GET["event"],
                 ':id_user' => $_SESSION["login"]
             ));
+            header("location: event.php?event=" . $_GET["event"]);
             break;
         case 2:
             echo "il ne faut sélectionnez qu'une seule date";
@@ -611,6 +612,7 @@ if (isset($_POST["submit_survey_date"])) {
             echo "il ne faut sélectionnez qu'une seule date";
             break;
     }
+    
 }
 
 //s'inscrire a un evenement public
@@ -639,9 +641,10 @@ if (isset($_POST["submit_unsignup_event"])) {
     ));
 
     $unsignug_vote = execute("UPDATE date_survey SET number_votes = :number_votes WHERE id_date_survey = :id_date_survey", array(
-        ":number_votes" => $unsignup_datesurvey_one["number_votes"] - 1,
+        ":number_votes" => ($unsignup_datesurvey_one["number_votes"] - 1),
         ":id_date_survey" => $rejoin["to_vote"]
     ));
+
 
     $delete_event_unsignup = execute('DELETE FROM rejoin 
     WHERE id_events = "' . $_GET["event"] . '"
