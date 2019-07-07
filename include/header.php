@@ -49,12 +49,15 @@ if ($path === "/projet-php/admin/profil") {
     <?php elseif ($_SERVER["SCRIPT_NAME"] === "/projet-php/list-event.php") : ?>
         <link rel="stylesheet" href="css/list-event.css">
         <title>Liste des événements</title>
-        <?php elseif ($_SERVER["SCRIPT_NAME"] === "/projet-php/event.php") : ?>
+    <?php elseif ($_SERVER["SCRIPT_NAME"] === "/projet-php/event.php") : ?>
         <link rel="stylesheet" href="css/event.css">
         <title>L'événement</title>
     <?php elseif ($_SERVER["SCRIPT_NAME"] === "/projet-php/modify-main.php" || "/projet-php/modify-address.php" || "/projet-php/modify-password.php" || "/projet-php/modify-contact.php") : ?>
         <link rel="stylesheet" href="css/modify-profil.css">
         <title>Modifier</title>
+    <?php elseif ($_SERVER["SCRIPT_NAME"] === "/projet-php/home.php") : ?>
+        <link rel="stylesheet" href="css/home.css">
+        <title>Accueil</title>
     <?php endif; ?>
 </head>
 
