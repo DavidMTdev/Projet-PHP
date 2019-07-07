@@ -178,6 +178,7 @@ if (!empty($id_event_user)) {
     $last_id_event_user = $id_event_user[count($id_event_user) - 1];
 }
 
+
 if (isset($_POST["submit_create_event"])) {
     if (isset($_POST["privé"])) {
         $_POST["privé"] = 1;
@@ -229,6 +230,18 @@ if (isset($_POST["submit_create_event"])) {
         if ($date3 < $date) {
             throw new error_create_event("l'une des dates que tu as rentrer est déjà passé");
         }
+        if ($date1 == $date2) {
+            throw new error_create_event("tu ne peux pas mettre 2 dates identiques");
+        }
+        if ($date1 == $date2) {
+            throw new error_create_event("tu ne peux pas mettre 2 dates identiques");
+        }
+        if ($date1 == $date3) {
+            throw new error_create_event("tu ne peux pas mettre 2 dates identiques");
+        }
+        if ($date2 == $date3) {
+            throw new error_create_event("tu ne peux pas mettre 2 dates identiques");
+        }
 
         $createEvent = execute("INSERT INTO events ( title, description_e, deadline, public, id_user) 
                    VALUES (:title , :description_e, :deadline, :public, :id_user)", array(
@@ -257,11 +270,6 @@ if (isset($_POST["submit_create_event"])) {
     $id_event_user = select("SELECT id_events, validation_events, public FROM events WHERE id_user = :id_user", array(
         ':id_user' => $_SESSION["login"]
     ));
-    if ($_POST["privé"] == 0) {
-        header("location: dashbord.php");
-    } else {
-        header("location: listUsers.php");
-    }
 }
 
 
@@ -312,6 +320,22 @@ if (isset($_POST["submit_create_event_add_users"])) {
                 }
             }
         }
+    }
+}
+
+function not_validate_event_privé()
+{
+    if (isset($_SESSION["login"])) {
+        $id_event_user = select("SELECT id_events, validation_events, public, id_user FROM events WHERE id_user = :id_user ORDER BY id_events", array(
+            ':id_user' => $_SESSION["login"]
+        ));
+    }
+    
+    if (!empty($id_event_user)) {
+        $last_id_event_user = $id_event_user[count($id_event_user) - 1];
+    }
+    if ($last_id_event_user["validation_events"] == 0) {
+        header("location: listUsers.php");
     }
 }
 
@@ -575,7 +599,7 @@ if (isset($_POST["submit_survey_date"])) {
                 ':number_votes' => $number_vote + 1
             ));
             $update_vote_user = execute("UPDATE rejoin SET to_vote = :to_vote WHERE id_events = :id_events AND id_user = :id_user", array(
-                "to_vote" => 1,
+                "to_vote" => $event_checkbox,
                 ':id_events' => $_GET["event"],
                 ':id_user' => $_SESSION["login"]
             ));
@@ -605,13 +629,25 @@ if (isset($_POST["submit_signup_event_public"])) {
 
 //se désinscrire a un evenement public
 if (isset($_POST["submit_unsignup_event"])) {
-    $delete_event_unsignup = execute('DELETE FROM rejoin 
-    WHERE id_events = "' . $_GET["event"] . '"
-    AND id_user = "' . $_SESSION["login"] . '"');
     $rejoin = selectOne("SELECT * FROM rejoin WHERE id_events = :id_events AND id_user = :id_user", array(
         "id_events" => $_GET["event"],
         "id_user" => $_SESSION["login"]
     ));
+
+    $unsignup_datesurvey_one = selectOne("SELECT number_votes FROM date_survey WHERE id_date_survey = :id_date_survey", array(
+        "id_date_survey" => $rejoin["to_vote"]
+    ));
+
+    $unsignug_vote = execute("UPDATE date_survey SET number_votes = :number_votes WHERE id_date_survey = :id_date_survey", array(
+        ":number_votes" => $unsignup_datesurvey_one["number_votes"] - 1,
+        ":id_date_survey" => $rejoin["to_vote"]
+    ));
+
+    $delete_event_unsignup = execute('DELETE FROM rejoin 
+    WHERE id_events = "' . $_GET["event"] . '"
+    AND id_user = "' . $_SESSION["login"] . '"');
+
+    header("location: dashbord.php");
 }
 
 //date depasse la deadline ça conserve seulement la date qui a le plus de vote

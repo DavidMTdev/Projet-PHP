@@ -1,4 +1,5 @@
-<?php require_once("include/header.php") ?>
+<?php require_once("include/header.php");
+not_validate_event_privé(); ?>
 
 <div class="display-flex-center">
     <div class="event-title-container">
@@ -23,7 +24,7 @@
                     <?php foreach ($survey_date as $key => $value) : ?>
                         <div class="event-date">
                             <?php echo $value["date_events"] ?>
-                            <?php if ($rejoin["to_vote"] == 1) : ?>
+                            <?php if ($rejoin["to_vote"] != 0) : ?>
                                 <p>Nombre de vote : <?= $value["number_votes"] ?></p>
                             <?php else : ?>
                                 <input type="checkbox" name="event<?= $value["id_date_survey"] ?>">
@@ -31,7 +32,7 @@
                         </div>
                     <?php endforeach; ?>
                 </div>
-                <?php if ($rejoin["to_vote"] != 1) : ?>
+                <?php if ($rejoin["to_vote"] == 0) : ?>
                     <div class="display-flex-center">
                         <button type="submit" name="submit_survey_date" class="submit-button">Valider la date</button>
                     </div>

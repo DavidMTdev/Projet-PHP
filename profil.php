@@ -1,4 +1,5 @@
-<?php require_once("include/header.php") ?>
+<?php require_once("include/header.php");
+not_validate_event_privé(); ?>
 
 <div class="profil">
     <div class="profil-presentation">
