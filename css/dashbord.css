@@ -93,6 +93,7 @@ body{
 .event-container{
     display: grid;
     grid-template-columns: 33.3% 33.3% 33.3%;
+    margin: 20px 0;
 }
 
 .event{
@@ -115,4 +116,25 @@ body{
 
 .user-infos a:hover{
     color:black;
+}
+
+.see-everything{
+    background: none;
+    display: block;
+    margin: 20px auto;
+    text-align: center;
+    border: 2px solid #0abde3;
+    padding: 14px 10px;
+    width: 150px;
+    outline: none;
+    color: white;
+    border-radius: 24px;
+    transition: 0.25s;
+    cursor: pointer;
+    font-weight: bold; 
+    box-shadow: 0 4px 4px #404040;
+}
+
+.see-everything:hover{
+    background : #0abde3;
 }

@@ -129,7 +129,7 @@ not_validate_event_privé();
                 <?php endforeach; ?>
             </div>
             <input type="hidden" name="user" value=<?= $_GET['user'] ?>>
-            <button type="submit">Tout voir</button>
+            <button type="submit" class="see-everything">Tout voir</button>
         </form>
     <?php endif; ?>
 </div>
