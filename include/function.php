@@ -262,6 +262,8 @@ if (isset($_POST["submit_create_event"])) {
                 ':id_events' => $id_event["id_events"]
             ));
         }
+
+        header("location: dashbord.php?user=" . $_SESSION['login']);
     } catch (error_create_event $e) {
         echo $e->getMessage();
     } catch (Exception $e) {
@@ -612,7 +614,6 @@ if (isset($_POST["submit_survey_date"])) {
             echo "il ne faut sélectionnez qu'une seule date";
             break;
     }
-    
 }
 
 //s'inscrire a un evenement public
